@@ -1,0 +1,51 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: snowykte0426/daram
+          stage: main
+          yaml: >
+            name: brainstorming-server-v1
+
+            app: dockerfile
+
+            options:
+              ports: 8080
+              dockerfile: Dockerfile
+              env:
+                - name: DB_HOST
+                  value: ${{ secrets.DB_HOST }}
+                - name: DB_PORT
+                  value: ${{ secrets.DB_PORT }}
+                - name: DB_NAME
+                  value: ${{ secrets.DB_NAME }}
+                - name: DB_USERNAME
+                  value: ${{ secrets.DB_USERNAME }}
+                - name: DB_PASSWORD
+                  value: ${{ secrets.DB_PASSWORD }}
+                - name: JWT_SECRET
+                  value: ${{ secrets.JWT_SECRET }}
+                - name: SERVER_PORT
+                  value: ${{ secrets.SERVER_PORT }}
+              args: []
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+              preset: dockerfile-java
