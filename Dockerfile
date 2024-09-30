@@ -1,6 +1,7 @@
 FROM gradle:7.5.1-jdk17 AS build
 WORKDIR /app
 COPY --chown=gradle:gradle . /app
+RUN chmod +x ./gradlew
 RUN ./gradlew clean build --no-daemon
 FROM openjdk:17-jdk-alpine
 WORKDIR /app
