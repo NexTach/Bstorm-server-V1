@@ -20,8 +20,5 @@ jobs:
       - name: Build Docker image
         run: docker build -t my-java-app .
 
-      - name: Run Docker container
-        run: docker run my-java-app
-
       - name: Remove Docker image
         run: docker rmi my-java-app
