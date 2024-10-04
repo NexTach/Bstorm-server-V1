@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BrainstormingServerV1Application {
+public class BstromServerV1Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BrainstormingServerV1Application.class, args);
+		SpringApplication.run(BstromServerV1Application.class, args);
 	}
 
 }
