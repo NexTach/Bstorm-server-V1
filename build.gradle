@@ -3,6 +3,8 @@ plugins {
 	id 'org.springframework.boot' version '3.3.4'
 	id 'io.spring.dependency-management' version '1.1.6'
 	id 'org.jetbrains.kotlin.jvm'
+	id "org.jetbrains.kotlin.plugin.jpa" version "1.8.0"
+	id "org.jetbrains.kotlin.plugin.noarg" version "1.8.0"
 }
 
 group = 'com.nextech'
@@ -12,6 +14,10 @@ java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
+}
+
+noArg {
+	annotation("javax.persistence.Entity")
 }
 
 configurations {
