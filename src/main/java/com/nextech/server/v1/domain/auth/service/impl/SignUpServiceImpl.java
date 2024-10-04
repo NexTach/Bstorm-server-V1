@@ -3,7 +3,7 @@ package com.nextech.server.v1.domain.auth.service.impl;
 import com.nextech.server.v1.domain.auth.dto.request.SignUpRequest;
 import com.nextech.server.v1.domain.auth.dto.response.SignUpResponse;
 import com.nextech.server.v1.domain.auth.service.SignUpService;
-import com.nextech.server.v1.domain.members.entity.Member;
+import com.nextech.server.v1.domain.members.entity.Members;
 import com.nextech.server.v1.domain.members.repository.MemberRepository;
 import com.nextech.server.v1.global.exception.EmailAlreadyExistsException;
 import jakarta.transaction.Transactional;
@@ -25,7 +25,7 @@ public class SignUpServiceImpl implements SignUpService {
             throw new EmailAlreadyExistsException("User is already subscribed");
         }
         String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
-        Member member = new Member(null, signUpRequest.getMemberName(), signUpRequest.getEmail(), encodedPassword, signUpRequest.getAge(), signUpRequest.getGender(), signUpRequest.getRole(), signUpRequest.getExtentOfDementia(), null);
+        Members member = new Members(null, signUpRequest.getMemberName(), signUpRequest.getEmail(), encodedPassword, signUpRequest.getAge(), signUpRequest.getGender(), signUpRequest.getRole(), signUpRequest.getExtentOfDementia(), null);
         memberRepository.save(member);
         member = memberRepository.findByEmail(signUpRequest.getEmail());
         if (member.getId() == null) {
