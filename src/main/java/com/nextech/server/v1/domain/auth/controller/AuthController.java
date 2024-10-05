@@ -4,12 +4,17 @@ import com.nextech.server.v1.domain.auth.dto.request.SignInRequest;
 import com.nextech.server.v1.domain.auth.dto.request.SignUpRequest;
 import com.nextech.server.v1.domain.auth.dto.response.SignUpResponse;
 import com.nextech.server.v1.domain.auth.service.SignInService;
+import com.nextech.server.v1.domain.auth.service.SignOutService;
 import com.nextech.server.v1.domain.auth.service.SignUpService;
 import com.nextech.server.v1.global.dto.response.TokenResponse;
 import com.nextech.server.v1.global.security.jwt.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpStatus;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "인증", description = "인증관련 API")
@@ -20,6 +25,7 @@ public class AuthController {
 
     private final SignUpService signUpService;
     private final SignInService signInService;
+    private final SignOutService signOutService;
     private final JwtProvider jwtProvider;
 
     @Operation(summary = "SignUp", description = "회원가입")
@@ -38,5 +44,12 @@ public class AuthController {
     @PatchMapping("/reissue")
     public TokenResponse reissue(@RequestHeader("refreshToken") String refreshToken) {
         return jwtProvider.reissue(refreshToken);
+    }
+
+    @Operation(summary = "Signout", description = "로그아웃")
+    @DeleteMapping("/signout")
+    public HttpEntity<Object> signOut(HttpServletRequest request) {
+        signOutService.signOut(request.getHeader("Authorization"));
+        return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build();
     }
 }
