@@ -14,7 +14,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,13 +30,16 @@ import static com.nextech.server.v1.global.security.filter.JwtFilter.BEARER_PREF
 
 @Component
 public class JwtProvider {
+
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer ";
-    private static final long ACCESS_TOKEN_TIME = 60L * 30 * 4;
-    private static final long REFRESH_TOKEN_TIME = 60L * 60 * 24 * 7;
+    private static final long ACCESS_TOKEN_TIME = 60L * 30 * 4; // 2시간
+    private static final long REFRESH_TOKEN_TIME = 60L * 60 * 24 * 7; // 1주일
     private static Key key;
+
     private final AuthDetailsService authDetailsService;
     private final RedisUtil redisUtil;
+
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -53,7 +55,17 @@ public class JwtProvider {
     }
 
     public TokenResponse generateTokenDto(String id, Roles roles) {
-        return new TokenResponse(generateAccessToken(id), generateRefreshToken(id), LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME), LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME), roles);
+        String accessToken = generateAccessToken(id);
+        String refreshToken = generateRefreshToken(id);
+        redisUtil.set(accessToken, id, (int) ACCESS_TOKEN_TIME);
+        redisUtil.set(refreshToken, id, (int) REFRESH_TOKEN_TIME);
+        return new TokenResponse(
+                accessToken,
+                refreshToken,
+                LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME),
+                LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME),
+                roles
+        );
     }
 
     public Long getExpiration(String accessToken) {
@@ -64,7 +76,10 @@ public class JwtProvider {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return !redisUtil.hasKeyBlackList(token);
+            if (redisUtil.hasKeyBlackList(token)) {
+                throw new InvalidTokenException("This token is blacklisted.");
+            }
+            return true;
         } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException();
         } catch (Exception e) {
@@ -77,6 +92,7 @@ public class JwtProvider {
         if (claims.get(AUTHORITIES_KEY) == null) {
             throw new InvalidTokenException("Invalid Token");
         }
+
         UserDetails principal = authDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
     }
@@ -97,21 +113,28 @@ public class JwtProvider {
         return null;
     }
 
-    public String parseRefreshToken(String refreshToken) {
-        if (refreshToken.startsWith(BEARER_TYPE)) {
-            return refreshToken.replace(BEARER_TYPE, "");
-        } else {
-            return null;
-        }
-    }
-
     public String generateAccessToken(String id) {
         Date accessTokenExpiresIn = new Date(System.currentTimeMillis() + ACCESS_TOKEN_TIME * 1000);
-        return Jwts.builder().setSubject(id).claim(AUTHORITIES_KEY, "JWT").setIssuedAt(new Date()).setExpiration(accessTokenExpiresIn).signWith(key, SignatureAlgorithm.HS256).compact();
+        return Jwts.builder()
+                .setSubject(id)
+                .claim(AUTHORITIES_KEY, "JWT")
+                .setIssuedAt(new Date())
+                .setExpiration(accessTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public String generateRefreshToken(String id) {
         Date refreshTokenExpiresIn = new Date(System.currentTimeMillis() + REFRESH_TOKEN_TIME * 1000);
-        return Jwts.builder().setSubject(id).setExpiration(refreshTokenExpiresIn).signWith(key, SignatureAlgorithm.HS256).compact();
+        return Jwts.builder()
+                .setSubject(id)
+                .setExpiration(refreshTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public void addToBlackList(String token) {
+        long expirationTime = getExpiration(token) - System.currentTimeMillis();
+        redisUtil.setBlackList(token, "blacklisted", expirationTime);
     }
 }
