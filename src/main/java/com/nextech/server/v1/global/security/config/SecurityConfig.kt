@@ -30,7 +30,8 @@ open class SecurityConfig(
         http.csrf { it.disable() }.cors { it.configurationSource(corsConfigurationSource()) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { requests ->
-                requests.requestMatchers("/auth/**").permitAll().anyRequest().authenticated()
+                requests.requestMatchers("/auth/signin", "auth/signup", "auth/reissue").permitAll().anyRequest()
+                    .authenticated()
             }.addFilterBefore(JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter::class.java)
         return http.build()
     }
