@@ -6,13 +6,11 @@ import com.nextech.server.v1.domain.auth.dto.response.SignUpResponse;
 import com.nextech.server.v1.domain.auth.service.SignInService;
 import com.nextech.server.v1.domain.auth.service.SignUpService;
 import com.nextech.server.v1.global.dto.response.TokenResponse;
+import com.nextech.server.v1.global.security.jwt.JwtProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "인증", description = "인증관련 API")
 @RequiredArgsConstructor
@@ -22,6 +20,7 @@ public class AuthController {
 
     private final SignUpService signUpService;
     private final SignInService signInService;
+    private final JwtProvider jwtProvider;
 
     @Operation(summary = "SignUp", description = "회원가입")
     @PostMapping("/signup")
@@ -33,5 +32,11 @@ public class AuthController {
     @PostMapping("/signin")
     public TokenResponse signIn(@RequestBody SignInRequest signInRequest) {
         return signInService.signIn(signInRequest);
+    }
+
+    @Operation(summary = "Reissue", description = "토큰 재발급")
+    @PatchMapping("/reissue")
+    public TokenResponse reissue(@RequestHeader("refreshToken") String refreshToken) {
+        return jwtProvider.reissue(refreshToken);
     }
 }
