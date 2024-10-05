@@ -2,8 +2,9 @@ package com.nextech.server.v1.global.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextech.server.v1.global.dto.response.ErrorResponse;
-import com.nextech.server.v1.global.exception.InvalidTokenException;
 import com.nextech.server.v1.global.exception.ExpiredTokenException;
+import com.nextech.server.v1.global.exception.InvalidTokenException;
+import com.nextech.server.v1.global.exception.InvalidTokenFormatException;
 import com.nextech.server.v1.global.security.jwt.JwtProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,18 +30,16 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        String jwt = jwtProvider.resolveToken(request);
         try {
+            String jwt = jwtProvider.resolveToken(request);
             if (StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
                 Authentication authentication = jwtProvider.getAuthentication(jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (InvalidTokenException | ExpiredTokenException e) {
+            filterChain.doFilter(request, response);
+        } catch (InvalidTokenFormatException | InvalidTokenException | ExpiredTokenException e) {
             setErrorResponse(response, e.getMessage());
-            return;
         }
-
-        filterChain.doFilter(request, response);
     }
 
     private void setErrorResponse(HttpServletResponse response, String errorMessage) throws IOException {
