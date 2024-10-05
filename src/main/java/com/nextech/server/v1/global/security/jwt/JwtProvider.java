@@ -84,13 +84,12 @@ public class JwtProvider {
         if (member == null) {
             throw new InvalidTokenException("User not found");
         }
-        Roles roles = member.getRole();
-        String newAccessToken = generateAccessToken(member.getEmail(), roles);
+        String newAccessToken = generateAccessToken(member.getEmail(), member.getRole());
         String newRefreshToken = generateRefreshToken(member.getEmail());
         refreshTokenRepository.delete(storedToken);
         RefreshToken newRefreshTokenEntity = new RefreshToken(newRefreshToken, member.getEmail(), LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME));
         refreshTokenRepository.save(newRefreshTokenEntity);
-        return new TokenResponse(newAccessToken, newRefreshToken, LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME), LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME), roles);
+        return new TokenResponse(newAccessToken, newRefreshToken, LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME), LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME), member.getRole());
     }
 
     public boolean validateToken(String token) {

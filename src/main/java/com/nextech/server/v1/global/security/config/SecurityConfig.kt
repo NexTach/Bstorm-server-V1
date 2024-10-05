@@ -40,7 +40,7 @@ open class SecurityConfig(
         val corsConfig = CorsConfiguration().apply {
             allowedOrigins = listOf("*")
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
-            allowedHeaders = listOf("Authorization", "Content-Type")
+            allowedHeaders = listOf("Authorization", "Content-Type", "refreshToken")
             allowCredentials = false
             exposedHeaders = listOf("Authorization")
         }
