@@ -30,6 +30,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+        String requestURI = request.getRequestURI();
+        if (requestURI.startsWith("/api/v1/auth/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         try {
             String jwt = jwtProvider.resolveToken(request);
             if (StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
