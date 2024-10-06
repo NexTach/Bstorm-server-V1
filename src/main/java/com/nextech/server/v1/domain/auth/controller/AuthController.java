@@ -7,7 +7,7 @@ import com.nextech.server.v1.domain.auth.service.SignInService;
 import com.nextech.server.v1.domain.auth.service.SignOutService;
 import com.nextech.server.v1.domain.auth.service.SignUpService;
 import com.nextech.server.v1.global.dto.response.TokenResponse;
-import com.nextech.server.v1.global.security.jwt.JwtProvider;
+import com.nextech.server.v1.global.security.jwt.service.JwtTokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class AuthController {
     private final SignUpService signUpService;
     private final SignInService signInService;
     private final SignOutService signOutService;
-    private final JwtProvider jwtProvider;
+    private final JwtTokenService jwtTokenService;
 
     @Operation(summary = "SignUp", description = "회원가입")
     @PostMapping("/signup")
@@ -43,7 +43,7 @@ public class AuthController {
     @Operation(summary = "Reissue", description = "토큰 재발급")
     @PatchMapping("/reissue")
     public TokenResponse reissue(@RequestHeader("refreshToken") String refreshToken) {
-        return jwtProvider.reissue(refreshToken);
+        return jwtTokenService.reissueToken(refreshToken);
     }
 
     @Operation(summary = "Signout", description = "로그아웃")

@@ -5,7 +5,8 @@ import com.nextech.server.v1.global.dto.response.ErrorResponse;
 import com.nextech.server.v1.global.exception.ExpiredTokenException;
 import com.nextech.server.v1.global.exception.InvalidTokenException;
 import com.nextech.server.v1.global.exception.InvalidTokenFormatException;
-import com.nextech.server.v1.global.security.jwt.JwtProvider;
+import com.nextech.server.v1.global.security.jwt.service.JwtAuthenticationService;
+import com.nextech.server.v1.global.security.jwt.service.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,10 +23,12 @@ public class JwtFilter extends OncePerRequestFilter {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String BEARER_PREFIX = "Bearer ";
 
-    private final JwtProvider jwtProvider;
+    private final JwtTokenService jwtTokenService;
+    private final JwtAuthenticationService jwtAuthenticationService;
 
-    public JwtFilter(JwtProvider jwtProvider) {
-        this.jwtProvider = jwtProvider;
+    public JwtFilter(JwtTokenService jwtTokenService, JwtAuthenticationService jwtAuthenticationService) {
+        this.jwtTokenService = jwtTokenService;
+        this.jwtAuthenticationService = jwtAuthenticationService;
     }
 
     @Override
@@ -36,9 +39,9 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
         try {
-            String jwt = jwtProvider.resolveToken(request);
-            if (StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
-                Authentication authentication = jwtProvider.getAuthentication(jwt);
+            String jwt = jwtTokenService.resolveToken(request);
+            if (StringUtils.hasText(jwt) && jwtTokenService.validateToken(jwt)) {
+                Authentication authentication = jwtAuthenticationService.getAuthentication(jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
             filterChain.doFilter(request, response);

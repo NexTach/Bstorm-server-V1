@@ -21,16 +21,42 @@ public class SignUpServiceImpl implements SignUpService {
     @Transactional
     @Override
     public SignUpResponse signUp(@Valid SignUpRequest signUpRequest) {
-        if (memberRepository.findByEmail(signUpRequest.getEmail()) != null) {
+        checkIfEmailAlreadyExists(signUpRequest.getEmail());
+        Members newMember = createNewMember(signUpRequest);
+        Members savedMember = memberRepository.save(newMember);
+        return buildSignUpResponse(savedMember);
+    }
+
+    private void checkIfEmailAlreadyExists(String email) {
+        if (memberRepository.findByEmail(email) != null) {
             throw new EmailAlreadyExistsException("User is already subscribed");
         }
-        String encodedPassword = passwordEncoder.encode(signUpRequest.getPassword());
-        Members member = new Members(null, signUpRequest.getMemberName(), signUpRequest.getEmail(), encodedPassword, signUpRequest.getAge(), signUpRequest.getGender(), signUpRequest.getRole(), signUpRequest.getExtentOfDementia(), null);
-        memberRepository.save(member);
-        member = memberRepository.findByEmail(signUpRequest.getEmail());
+    }
+
+    private Members createNewMember(SignUpRequest request) {
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+        return new Members(
+                null,
+                request.getMemberName(),
+                request.getEmail(),
+                encodedPassword,
+                request.getAge(),
+                request.getGender(),
+                request.getRole(),
+                request.getExtentOfDementia(),
+                null);
+    }
+
+    private SignUpResponse buildSignUpResponse(Members member) {
         if (member.getId() == null) {
             throw new IllegalStateException("Member ID is null");
         }
-        return new SignUpResponse(member.getId(), member.getMemberName(), member.getEmail(), (short) member.getAge(), member.getGender(), member.getRole(), (short) member.getExtentOfDementia(), member.getProfilePictureURI());
+        return new SignUpResponse(
+                member.getId(), member.getMemberName(), member.getEmail(),
+                (short) member.getAge(),
+                member.getGender(),
+                member.getRole(),
+                (short) member.getExtentOfDementia(),
+                member.getProfilePictureURI());
     }
 }

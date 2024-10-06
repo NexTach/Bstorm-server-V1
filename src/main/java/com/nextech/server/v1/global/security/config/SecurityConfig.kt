@@ -1,7 +1,8 @@
 package com.nextech.server.v1.global.security.config
 
 import com.nextech.server.v1.global.security.filter.JwtFilter
-import com.nextech.server.v1.global.security.jwt.JwtProvider
+import com.nextech.server.v1.global.security.jwt.service.JwtAuthenticationService
+import com.nextech.server.v1.global.security.jwt.service.JwtTokenService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -17,7 +18,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 @Configuration
 open class SecurityConfig(
-    private val jwtProvider: JwtProvider
+    private val jwtTokenService: JwtTokenService,
+    private val jwtAuthenticationService: JwtAuthenticationService
 ) {
 
     @Bean
@@ -30,9 +32,12 @@ open class SecurityConfig(
         http.csrf { it.disable() }.cors { it.configurationSource(corsConfigurationSource()) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { requests ->
-                requests.requestMatchers("/auth/signin", "auth/signup", "auth/reissue").permitAll().anyRequest()
+                requests.requestMatchers(
+                    "/auth/signin",
+                    "auth/signup",
+                    "auth/reissue").permitAll().anyRequest()
                     .authenticated()
-            }.addFilterBefore(JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter::class.java)
+            }.addFilterBefore(JwtFilter(jwtTokenService,jwtAuthenticationService), UsernamePasswordAuthenticationFilter::class.java)
         return http.build()
     }
 
