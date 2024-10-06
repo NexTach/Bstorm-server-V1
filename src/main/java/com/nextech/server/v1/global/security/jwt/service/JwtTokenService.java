@@ -133,16 +133,16 @@ public class JwtTokenService {
         if (storedToken.getExpiredAt().isBefore(LocalDateTime.now())) {
             throw new ExpiredRefreshTokenException("Refresh token expired");
         }
-        Members member = memberRepository.findByEmail(storedToken.getUsername());
+        Members member = memberRepository.findByPhoneNumber(storedToken.getUsername());
         if (member == null) {
             throw new InvalidTokenException("User not found");
         }
-        String newAccessToken = generateAccessToken(member.getEmail(), member.getRole());
-        String newRefreshToken = generateRefreshToken(member.getEmail());
+        String newAccessToken = generateAccessToken(member.getPhoneNumber(), member.getRole());
+        String newRefreshToken = generateRefreshToken(member.getPhoneNumber());
         refreshTokenRepository.delete(storedToken);
         RefreshToken newRefreshTokenEntity = new RefreshToken(
                 newRefreshToken,
-                member.getEmail(),
+                member.getPhoneNumber(),
                 LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME)
         );
         refreshTokenRepository.save(newRefreshTokenEntity);

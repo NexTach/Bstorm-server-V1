@@ -6,7 +6,7 @@ import com.nextech.server.v1.global.enums.Roles
 data class SignUpResponse(
     val id: Long,
     val memberName: String,
-    val email: String,
+    val phoneNumber: String,
     val age: Short,
     val gender: Gender,
     val role: Roles,

@@ -12,7 +12,7 @@ class AuthDetailsService(
 ) : UserDetailsService {
 
     override fun loadUserByUsername(id: String): UserDetails {
-        val member = userRepository.findByEmail(id)
+        val member = userRepository.findByPhoneNumber(id)
         return member?.let {
             AuthDetails(it)
         } ?: throw UsernameNotFoundException("User not found with id: $id")
