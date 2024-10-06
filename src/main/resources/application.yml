@@ -27,6 +27,12 @@ logging:
   level:
     root: INFO
     com.nextech: DEBUG
+  file:
+    path: ./logs/application.log
+  logback:
+    rollingpolicy:
+      max-history: 2
+      total-size-cap: 100MB
 
 management:
   endpoints:
