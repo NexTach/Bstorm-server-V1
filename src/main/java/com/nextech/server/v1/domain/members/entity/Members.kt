@@ -16,8 +16,8 @@ data class Members(
     ) @field:NotBlank(message = "Member name cannot be blank") val memberName: String,
 
     @Column(
-        name = "email", nullable = false, unique = true
-    ) @field:Email(message = "Email should be valid") @field:NotBlank(message = "Email cannot be blank") val email: String,
+        name = "phone_number", nullable = false, unique = true
+    ) @field:NotBlank(message = "Email cannot be blank") val phoneNumber: String,
 
     @Column(
         name = "password", nullable = false

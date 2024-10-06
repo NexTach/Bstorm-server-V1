@@ -30,7 +30,7 @@ public class AuthDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return member.getEmail();
+        return member.getPhoneNumber();
     }
 
     @Override
