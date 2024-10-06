@@ -23,25 +23,33 @@ public class SignUpServiceImpl implements SignUpService {
     @Transactional
     @Override
     public SignUpResponse signUp(@Valid SignUpRequest signUpRequest) {
-        checkIfEmailAlreadyExists(signUpRequest.getEmail());
+        String phoneNumber = convertPhoneNumber(signUpRequest.getPhoneNumber());
+        checkIfPhoneNumberAlreadyExists(phoneNumber);
         Roles role = getRole(signUpRequest.getExtentOfDementia(), signUpRequest.getRole());
-        Members newMember = createNewMember(signUpRequest, role);
+        Members newMember = createNewMember(signUpRequest, phoneNumber, role);
         Members savedMember = memberRepository.save(newMember);
         return buildSignUpResponse(savedMember);
     }
 
-    private void checkIfEmailAlreadyExists(String email) {
-        if (memberRepository.findByEmail(email) != null) {
+    private void checkIfPhoneNumberAlreadyExists(String email) {
+        if (memberRepository.findByPhoneNumber(email) != null) {
             throw new EmailAlreadyExistsException("User is already subscribed");
         }
     }
 
-    private Members createNewMember(SignUpRequest request, Roles role) {
+    private String convertPhoneNumber(String phoneNumber) {
+        if (phoneNumber.startsWith("010")) {
+            return phoneNumber.replaceFirst("010", "+8210");
+        }
+        return phoneNumber;
+    }
+
+    private Members createNewMember(SignUpRequest request, String phoneNumber, Roles role) {
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         return new Members(
                 null,
                 request.getMemberName(),
-                request.getEmail(),
+                phoneNumber,
                 encodedPassword,
                 request.getAge(),
                 request.getGender(),
@@ -69,6 +77,6 @@ public class SignUpServiceImpl implements SignUpService {
         if (member.getId() == null) {
             throw new IllegalStateException("Member ID is null");
         }
-        return new SignUpResponse(member.getId(), member.getMemberName(), member.getEmail(), (short) member.getAge(), member.getGender(), member.getRole(), (short) member.getExtentOfDementia(), member.getProfilePictureURI());
+        return new SignUpResponse(member.getId(), member.getMemberName(), member.getPhoneNumber(), (short) member.getAge(), member.getGender(), member.getRole(), (short) member.getExtentOfDementia(), member.getProfilePictureURI());
     }
 }
