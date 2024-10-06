@@ -2,7 +2,7 @@
 
 <img src="" width="200" height="200">
 
-2024 빛가람 에너지밸리 소프트웨어 경진대회 NexTech의 치매예방 서비스 **Brainstorming**입니다!
+2024 빛가람 에너지밸리 소프트웨어 경진대회 NexTech의 치매예방 서비스 **Bstorm**입니다!
 
 ---
 ### Commit Message Rule
@@ -27,7 +27,7 @@ Resolves | issue를 해결하고 있을 때 사용
 Ref | 참고할 issue가 있을 때 사용
 Related to | 해당 커밋에 관련된 issue 번호에 사용
 
-```agsl
+```
 feat: 회원 가입 기능 구현
 
 회원 가입 기능을 구현하였습니다
