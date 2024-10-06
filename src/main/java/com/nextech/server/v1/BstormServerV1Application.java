@@ -6,9 +6,9 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 
 @SpringBootApplication
 @EnableRedisRepositories(basePackages = "com.nextech.server.v1.global.security.jwt.repository")
-public class BstromServerV1Application {
+public class BstormServerV1Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BstromServerV1Application.class, args);
+		SpringApplication.run(BstormServerV1Application.class, args);
 	}
 }
