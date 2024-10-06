@@ -28,16 +28,16 @@ public class SignOutServiceImpl implements SignOutService {
     public void signOut(String bearerToken) {
         String accessToken = jwtTokenService.resolveToken(bearerToken);
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Members members = memberRepository.findByEmail(email);
+        Members members = memberRepository.findByPhoneNumber(email);
         if (members == null) {
             throw new UsernameNotFoundException("User not found");
         }
         refreshTokenRepository.deleteById(
                 Objects.requireNonNull(refreshTokenRepository.
-                        findByUsername(members.getEmail())).getRefreshToken());
+                        findByUsername(members.getPhoneNumber())).getRefreshToken());
         redisUtil.setBlackList(
                 accessToken,
-                members.getEmail(),
+                members.getPhoneNumber(),
                 jwtTokenService.getExpiration(accessToken)
         );
     }

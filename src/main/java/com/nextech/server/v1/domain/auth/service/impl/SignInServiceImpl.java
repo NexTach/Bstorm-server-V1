@@ -24,13 +24,13 @@ public class SignInServiceImpl implements SignInService {
     @Override
     @Transactional
     public TokenResponse signIn(SignInRequest signInRequest) {
-        Members member = memberRepository.findByEmail(signInRequest.getEmail());
+        Members member = memberRepository.findByPhoneNumber(signInRequest.getPhoneNumber());
         if (member == null) {
             throw new UsernameNotFoundException("User not found");
         }
         if (!passwordEncoder.matches(signInRequest.getPassword(), member.getPassword())) {
             throw new InvalidCredentialsException("Password does not match");
         }
-        return jwtTokenService.generateTokenDto(member.getEmail(), member.getRole());
+        return jwtTokenService.generateTokenDto(member.getPhoneNumber(), member.getRole());
     }
 }
