@@ -39,6 +39,10 @@ jobs:
                   value: ${{ secrets.DB_USERNAME }}
                 - name: DB_PASSWORD
                   value: ${{ secrets.DB_PASSWORD }}
+                - name: REDIS_HOST
+                  value: ${{ secrets.REDIS_HOST }}
+                - name: REDIS_PORT
+                  value: ${{ secrets.REDIS_PORT }}
                 - name: JWT_SECRET
                   value: ${{ secrets.JWT_SECRET }}
                 - name: SERVER_PORT
