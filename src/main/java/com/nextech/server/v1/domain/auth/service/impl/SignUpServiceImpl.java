@@ -5,6 +5,8 @@ import com.nextech.server.v1.domain.auth.dto.response.SignUpResponse;
 import com.nextech.server.v1.domain.auth.service.SignUpService;
 import com.nextech.server.v1.domain.members.entity.Members;
 import com.nextech.server.v1.domain.members.repository.MemberRepository;
+import com.nextech.server.v1.global.enums.Roles;
+import com.nextech.server.v1.global.enums.SignUpRequestRoles;
 import com.nextech.server.v1.global.exception.EmailAlreadyExistsException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -22,7 +24,8 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     public SignUpResponse signUp(@Valid SignUpRequest signUpRequest) {
         checkIfEmailAlreadyExists(signUpRequest.getEmail());
-        Members newMember = createNewMember(signUpRequest);
+        Roles role = getRole(signUpRequest.getExtentOfDementia(), signUpRequest.getRole());
+        Members newMember = createNewMember(signUpRequest, role);
         Members savedMember = memberRepository.save(newMember);
         return buildSignUpResponse(savedMember);
     }
@@ -33,7 +36,7 @@ public class SignUpServiceImpl implements SignUpService {
         }
     }
 
-    private Members createNewMember(SignUpRequest request) {
+    private Members createNewMember(SignUpRequest request, Roles role) {
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         return new Members(
                 null,
@@ -42,21 +45,30 @@ public class SignUpServiceImpl implements SignUpService {
                 encodedPassword,
                 request.getAge(),
                 request.getGender(),
-                request.getRole(),
+                role,
                 request.getExtentOfDementia(),
-                null);
+                null
+        );
+    }
+
+    private Roles getRole(Short extentOfDementia, SignUpRequestRoles role) {
+        if (role != SignUpRequestRoles.ROLE_WARD) {
+            return Roles.ROLE_PROTECTOR;
+        }
+        if (extentOfDementia >= 0 && extentOfDementia < 20) {
+            return Roles.ROLE_WARD_0;
+        } else if (extentOfDementia >= 20 && extentOfDementia < 40) {
+            return Roles.ROLE_WARD_1;
+        } else if (extentOfDementia >= 40 && extentOfDementia < 60) {
+            return Roles.ROLE_WARD_2;
+        }
+        return Roles.ROLE_WARD_3;
     }
 
     private SignUpResponse buildSignUpResponse(Members member) {
         if (member.getId() == null) {
             throw new IllegalStateException("Member ID is null");
         }
-        return new SignUpResponse(
-                member.getId(), member.getMemberName(), member.getEmail(),
-                (short) member.getAge(),
-                member.getGender(),
-                member.getRole(),
-                (short) member.getExtentOfDementia(),
-                member.getProfilePictureURI());
+        return new SignUpResponse(member.getId(), member.getMemberName(), member.getEmail(), (short) member.getAge(), member.getGender(), member.getRole(), (short) member.getExtentOfDementia(), member.getProfilePictureURI());
     }
 }
