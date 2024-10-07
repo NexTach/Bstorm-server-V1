@@ -6,6 +6,7 @@ import com.nextech.server.v1.domain.members.entity.Members;
 import com.nextech.server.v1.domain.members.repository.MemberRepository;
 import com.nextech.server.v1.global.dto.response.TokenResponse;
 import com.nextech.server.v1.global.exception.InvalidCredentialsException;
+import com.nextech.server.v1.global.phonenumber.ConvertPhoneNumber;
 import com.nextech.server.v1.global.security.jwt.service.JwtTokenService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,12 @@ public class SignInServiceImpl implements SignInService {
     private final MemberRepository memberRepository;
     private final JwtTokenService jwtTokenService;
     private final PasswordEncoder passwordEncoder;
+    private final ConvertPhoneNumber convertPhoneNumber;
 
     @Override
     @Transactional
     public TokenResponse signIn(SignInRequest signInRequest) {
-        Members member = memberRepository.findByPhoneNumber(signInRequest.getPhoneNumber());
+        Members member = memberRepository.findByPhoneNumber(convertPhoneNumber.convertPhoneNumber(signInRequest.getPhoneNumber()));
         if (member == null) {
             throw new UsernameNotFoundException("User not found");
         }
