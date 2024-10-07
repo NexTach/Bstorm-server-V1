@@ -12,7 +12,7 @@ data class Relation(
     val id: Long,
 
     @ManyToOne
-    @JoinColumn(name = "from_protected", referencedColumnName = "phone_number", nullable = false)  // phone_number를 참조
+    @JoinColumn(name = "from_protected", referencedColumnName = "phone_number", nullable = false)
     val fromProtected: Members,
 
     @ElementCollection
