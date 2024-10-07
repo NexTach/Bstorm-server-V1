@@ -35,7 +35,8 @@ public class CurrentUserInfoServiceImpl implements CurrentUserInfoService {
                 members.getGender(),
                 members.getRole(),
                 members.getExtentOfDementia(),
-                members.getProfilePictureURI()
+                members.getProfilePictureURI(),
+                null
         );
         return membersInquiryResponse;
     }

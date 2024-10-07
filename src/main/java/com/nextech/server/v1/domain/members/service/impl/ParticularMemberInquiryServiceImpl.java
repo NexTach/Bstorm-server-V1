@@ -24,7 +24,8 @@ public class ParticularMemberInquiryServiceImpl implements ParticularMemberInqui
                 member.getGender(),
                 member.getRole(),
                 member.getExtentOfDementia(),
-                member.getProfilePictureURI()
+                member.getProfilePictureURI(),
+                null
         );
         return membersInquiryResponse;
     }
