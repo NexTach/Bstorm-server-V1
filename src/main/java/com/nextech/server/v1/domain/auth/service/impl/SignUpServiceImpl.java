@@ -44,15 +44,25 @@ public class SignUpServiceImpl implements SignUpService {
         return buildSignUpResponse(savedMember, membersInquiryListResponse);
     }
 
-    private void checkIfPhoneNumberAlreadyExists(String email) {
-        if (memberRepository.findByPhoneNumber(email) != null) {
+    private void checkIfPhoneNumberAlreadyExists(String phoneNumber) {
+        if (memberRepository.findByPhoneNumber(phoneNumber) != null) {
             throw new EmailAlreadyExistsException("User is already subscribed");
         }
     }
 
     private Members createNewMember(SignUpRequest request, String phoneNumber, Roles role) {
         String encodedPassword = passwordEncoder.encode(request.getPassword());
-        return new Members(null, request.getMemberName(), phoneNumber, encodedPassword, request.getAge(), request.getGender(), role, request.getExtentOfDementia(), null);
+        return new Members(
+                null,
+                request.getMemberName(),
+                phoneNumber,
+                encodedPassword,
+                request.getAge(),
+                request.getGender(),
+                role,
+                request.getExtentOfDementia(),
+                null
+        );
     }
 
     private Roles getRole(Short extentOfDementia, SignUpRequestRoles role) {
@@ -70,15 +80,18 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     private MembersInquiryListResponse buildRelationListResponse(Members member) {
-        Relation relation = relationRepository.findByFromProtected(member);
-        if (relation == null) {
+        List<Relation> relations = relationRepository.findByFromProtected(member);
+        if (relations.isEmpty()) {
             return new MembersInquiryListResponse(List.of());
         }
+
         if (member.getRole() == Roles.ROLE_PROTECTOR) {
-            List<MembersInquiryResponse> wardMembers = relation.getToWard().stream().map(this::buildMemberResponseByPhoneNumber).collect(Collectors.toList());
+            List<MembersInquiryResponse> wardMembers = relations.stream()
+                    .flatMap(relation -> relation.getToWard().stream().map(this::buildMemberResponseByPhoneNumber))
+                    .collect(Collectors.toList());
             return new MembersInquiryListResponse(wardMembers);
         } else if (Set.of(Roles.ROLE_WARD_0, Roles.ROLE_WARD_1, Roles.ROLE_WARD_2, Roles.ROLE_WARD_3).contains(member.getRole())) {
-            Members protector = memberRepository.findByPhoneNumber(relation.getFromProtected().getPhoneNumber());
+            Members protector = memberRepository.findByPhoneNumber(relations.get(0).getFromProtected().getPhoneNumber());
             return new MembersInquiryListResponse(List.of(buildMemberResponse(protector)));
         }
         return new MembersInquiryListResponse(List.of());
@@ -90,13 +103,32 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     private MembersInquiryResponse buildMemberResponse(Members member) {
-        return new MembersInquiryResponse(member.getId(), member.getMemberName(), (short) member.getAge(), member.getGender(), member.getRole(), member.getExtentOfDementia(), member.getProfilePictureURI());
+        return new MembersInquiryResponse(
+                member.getId(),
+                member.getMemberName(),
+                (short) member.getAge(),
+                member.getGender(),
+                member.getRole(),
+                member.getExtentOfDementia(),
+                member.getProfilePictureURI(),
+                null
+        );
     }
 
     private SignUpResponse buildSignUpResponse(Members member, MembersInquiryListResponse membersInquiryListResponse) {
         if (member.getId() == null) {
             throw new IllegalStateException("Member ID is null");
         }
-        return new SignUpResponse(member.getId(), member.getMemberName(), member.getPhoneNumber(), (short) member.getAge(), member.getGender(), member.getRole(), (short) member.getExtentOfDementia(), member.getProfilePictureURI(), membersInquiryListResponse);
+        return new SignUpResponse(
+                member.getId(),
+                member.getMemberName(),
+                member.getPhoneNumber(),
+                (short) member.getAge(),
+                member.getGender(),
+                member.getRole(),
+                (short) member.getExtentOfDementia(),
+                member.getProfilePictureURI(),
+                membersInquiryListResponse
+        );
     }
 }
