@@ -22,9 +22,7 @@ jobs:
           stage: main
           yaml: >
             name: brainstorming-server-v1
-
             app: dockerfile
-
             options:
               ports: 8080
               dockerfile: Dockerfile
@@ -47,6 +45,18 @@ jobs:
                   value: ${{ secrets.JWT_SECRET }}
                 - name: SERVER_PORT
                   value: ${{ secrets.SERVER_PORT }}
+                - name: CLOUDFLARE_BUCKET_SUBDOMAIN
+                  value: ${{ secrets.CLOUDFLARE_BUCKET_SUBDOMAIN }}
+                - name: AWS_SECRET_KEY
+                  value: ${{ secrets.AWS_SECRET_KEY }}
+                - name: AWS_ACCESS_KEY_ID
+                  value: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                - name: AWS_S3_BUCKET
+                  value: ${{ secrets.AWS_S3_BUCKET }}
+                - name: AWS_S3_REGION
+                  value: ${{ secrets.AWS_S3_REGION }}
+                - name: AWS_S3_ENDPOINT_URL
+                  value: ${{ secrets.AWS_S3_ENDPOINT_URL }}
               args: []
             context:
               git:
