@@ -5,7 +5,9 @@ import com.nextech.server.v1.global.relation.entity.Relation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface RelationRepository extends JpaRepository<Relation, Long> {
-    Relation findByFromProtected(Members username);
+    List<Relation> findByFromProtected(Members username);
 }

@@ -1,11 +1,11 @@
 package com.nextech.server.v1.domain.members.controller;
 
 
-import com.nextech.server.v1.global.members.dto.response.MembersInquiryListResponse;
 import com.nextech.server.v1.domain.members.dto.response.MembersInquiryResponse;
 import com.nextech.server.v1.domain.members.service.AllMembersInquiryService;
 import com.nextech.server.v1.domain.members.service.CurrentUserInfoService;
 import com.nextech.server.v1.domain.members.service.ParticularMemberInquiryService;
+import com.nextech.server.v1.global.members.dto.response.MembersInquiryListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
