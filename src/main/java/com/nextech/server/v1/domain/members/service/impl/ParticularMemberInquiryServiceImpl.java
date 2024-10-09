@@ -53,7 +53,10 @@ public class ParticularMemberInquiryServiceImpl implements ParticularMemberInqui
                     member.getProfilePictureURI(),
                     new MembersInquiryListResponse(wardMembers)
             );
-        } else {
+        }
+        List<Relation> relationsAsWard = relationRepository.findByToWardContains(member.getPhoneNumber());
+        if (!relationsAsWard.isEmpty()) {
+            Members protector = relationsAsWard.get(0).getFromProtected();
             return new MembersInquiryResponse(
                     member.getId(),
                     member.getMemberName(),
@@ -62,8 +65,27 @@ public class ParticularMemberInquiryServiceImpl implements ParticularMemberInqui
                     member.getRole(),
                     member.getExtentOfDementia(),
                     member.getProfilePictureURI(),
-                    null
+                    new MembersInquiryListResponse(List.of(new MembersInquiryResponse(
+                            protector.getId(),
+                            protector.getMemberName(),
+                            (short) protector.getAge(),
+                            protector.getGender(),
+                            protector.getRole(),
+                            protector.getExtentOfDementia(),
+                            protector.getProfilePictureURI(),
+                            null
+                    )))
             );
         }
+        return new MembersInquiryResponse(
+                member.getId(),
+                member.getMemberName(),
+                (short) member.getAge(),
+                member.getGender(),
+                member.getRole(),
+                member.getExtentOfDementia(),
+                member.getProfilePictureURI(),
+                null
+        );
     }
 }
