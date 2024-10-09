@@ -13,31 +13,33 @@ data class Members(
 
     @Column(
         name = "member_name", nullable = false
-    ) @field:NotBlank(message = "Member name cannot be blank") val memberName: String,
+    ) @field:NotBlank(message = "Member name cannot be blank") var memberName: String,
 
     @Column(
         name = "phone_number", nullable = false, unique = true
-    ) @field:NotBlank(message = "Email cannot be blank") val phoneNumber: String,
+    ) @field:NotBlank(message = "Email cannot be blank") var phoneNumber: String,
 
     @Column(
         name = "password", nullable = false
     ) @field:NotBlank(message = "Password cannot be blank") @field:Size(
         min = 8, max = 100, message = "Password must be between 8 and 100 characters"
-    ) val password: String,
+    ) var password: String,
 
     @Column(name = "age", nullable = false) @field:Min(
         value = 0, message = "Age must be greater than or equal to 0"
-    ) val age: Int,
+    ) var age: Int,
 
-    @Convert(converter = GenderConverter::class) @Column(name = "gender", nullable = false) val gender: Gender,
+    @Convert(converter = GenderConverter::class) @Column(name = "gender", nullable = false) var gender: Gender,
 
-    @Enumerated(EnumType.STRING) @Column(name = "role", nullable = false) val role: Roles,
+    @Enumerated(EnumType.STRING) @Column(name = "role", nullable = false) var role: Roles,
 
     @Column(name = "extent_of_dementia", nullable = false) @field:Min(
         value = 0, message = "Extent of dementia must be greater than or equal to 0"
     ) @field:Max(
         value = 100, message = "Extent of dementia must be less than or equal to 100"
-    ) val extentOfDementia: Int = 0,
+    ) var extentOfDementia: Int = 0,
 
-    @Column(name = "profile_picture_URI", nullable = true, length = 2048) val profilePictureURI: String? = ""
+    @Column(name = "profile_picture_URI", nullable = true, length = 2048) var profilePictureURI: String? = null,
+
+    @Column(name="profile_picture_name", nullable = true, length = 2048) var profilePictureName: String? = null
 )
