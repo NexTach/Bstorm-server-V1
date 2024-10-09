@@ -51,18 +51,42 @@ public class AllMembersInquiryServiceImpl implements AllMembersInquiryService {
                         member.getProfilePictureURI(),
                         new MembersInquiryListResponse(wardMembers)
                 );
-            } else {
-                return new MembersInquiryResponse(
-                        member.getId(),
-                        member.getMemberName(),
-                        (short) member.getAge(),
-                        member.getGender(),
-                        member.getRole(),
-                        member.getExtentOfDementia(),
-                        member.getProfilePictureURI(),
-                        null
-                );
             }
+            else {
+                List<Relation> relationsAsWard = relationRepository.findByToWardContains(member.getPhoneNumber());
+                if (!relationsAsWard.isEmpty()) {
+                    Members protector = relationsAsWard.get(0).getFromProtected();
+                    return new MembersInquiryResponse(
+                            member.getId(),
+                            member.getMemberName(),
+                            (short) member.getAge(),
+                            member.getGender(),
+                            member.getRole(),
+                            member.getExtentOfDementia(),
+                            member.getProfilePictureURI(),
+                            new MembersInquiryListResponse(List.of(new MembersInquiryResponse(
+                                    protector.getId(),
+                                    protector.getMemberName(),
+                                    (short) protector.getAge(),
+                                    protector.getGender(),
+                                    protector.getRole(),
+                                    protector.getExtentOfDementia(),
+                                    protector.getProfilePictureURI(),
+                                    null
+                            )))
+                    );
+                }
+            }
+            return new MembersInquiryResponse(
+                    member.getId(),
+                    member.getMemberName(),
+                    (short) member.getAge(),
+                    member.getGender(),
+                    member.getRole(),
+                    member.getExtentOfDementia(),
+                    member.getProfilePictureURI(),
+                    null
+            );
         }).collect(Collectors.toList());
         return new MembersInquiryListResponse(membersResponses);
     }
