@@ -21,7 +21,7 @@ jobs:
           project: snowykte0426/daram
           stage: main
           yaml: >
-            name: brainstorming-server-v1
+            name: Bstorm-server-v1
             app: dockerfile
             options:
               ports: 8080
