@@ -8,7 +8,7 @@ import com.nextech.server.v1.domain.members.entity.Members;
 import com.nextech.server.v1.domain.members.repository.MemberRepository;
 import com.nextech.server.v1.global.enums.Roles;
 import com.nextech.server.v1.global.enums.SignUpRequestRoles;
-import com.nextech.server.v1.global.exception.EmailAlreadyExistsException;
+import com.nextech.server.v1.global.exception.PhoneNumberAlreadyExistsException;
 import com.nextech.server.v1.global.members.dto.response.MembersInquiryListResponse;
 import com.nextech.server.v1.global.phonenumber.ConvertPhoneNumber;
 import com.nextech.server.v1.global.relation.entity.Relation;
@@ -46,7 +46,7 @@ public class SignUpServiceImpl implements SignUpService {
 
     private void checkIfPhoneNumberAlreadyExists(String phoneNumber) {
         if (memberRepository.findByPhoneNumber(phoneNumber) != null) {
-            throw new EmailAlreadyExistsException("User is already subscribed");
+            throw new PhoneNumberAlreadyExistsException("User is already subscribed");
         }
     }
 
@@ -61,6 +61,7 @@ public class SignUpServiceImpl implements SignUpService {
                 request.getGender(),
                 role,
                 request.getExtentOfDementia(),
+                null,
                 null
         );
     }
