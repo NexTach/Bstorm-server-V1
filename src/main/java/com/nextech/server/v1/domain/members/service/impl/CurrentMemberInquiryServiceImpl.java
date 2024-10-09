@@ -3,16 +3,13 @@ package com.nextech.server.v1.domain.members.service.impl;
 import com.nextech.server.v1.domain.members.dto.response.MembersInquiryResponse;
 import com.nextech.server.v1.domain.members.entity.Members;
 import com.nextech.server.v1.domain.members.repository.MemberRepository;
-import com.nextech.server.v1.domain.members.service.CurrentUserInfoService;
+import com.nextech.server.v1.domain.members.service.CurrentMemberInquiryService;
 import com.nextech.server.v1.global.members.dto.response.MembersInquiryListResponse;
+import com.nextech.server.v1.global.members.service.MemberAuthService;
 import com.nextech.server.v1.global.relation.entity.Relation;
 import com.nextech.server.v1.global.relation.repository.RelationRepository;
-import com.nextech.server.v1.global.security.jwt.service.JwtAuthenticationService;
-import com.nextech.server.v1.global.security.jwt.service.JwtTokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,21 +17,15 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CurrentUserInfoServiceImpl implements CurrentUserInfoService {
+public class CurrentMemberInquiryServiceImpl implements CurrentMemberInquiryService {
 
     private final MemberRepository memberRepository;
     private final RelationRepository relationRepository;
-    private final JwtAuthenticationService jwtAuthenticationService;
-    private final JwtTokenService jwtTokenService;
+    private final MemberAuthService memberAuthService;
 
     @Override
-    public MembersInquiryResponse getCurrentUserInfo(HttpServletRequest request) {
-        String token = jwtTokenService.resolveToken(request.getHeader("Authorization"));
-        Authentication userinfo = jwtAuthenticationService.getAuthentication(token);
-        Members member = memberRepository.findByPhoneNumber(userinfo.getName());
-        if (member == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
+    public MembersInquiryResponse getCurrentMemberInfo(HttpServletRequest request) {
+        Members member = memberAuthService.getMemberByToken(request);
         List<Relation> relations = relationRepository.findByFromProtected(member);
         if (!relations.isEmpty()) {
             List<MembersInquiryResponse> wardMembers = relations.stream()
@@ -63,7 +54,10 @@ public class CurrentUserInfoServiceImpl implements CurrentUserInfoService {
                     member.getProfilePictureURI(),
                     new MembersInquiryListResponse(wardMembers)
             );
-        } else {
+        }
+        List<Relation> relationsAsWard = relationRepository.findByToWardContains(member.getPhoneNumber());
+        if (!relationsAsWard.isEmpty()) {
+            Members protector = relationsAsWard.get(0).getFromProtected();
             return new MembersInquiryResponse(
                     member.getId(),
                     member.getMemberName(),
@@ -72,8 +66,27 @@ public class CurrentUserInfoServiceImpl implements CurrentUserInfoService {
                     member.getRole(),
                     member.getExtentOfDementia(),
                     member.getProfilePictureURI(),
-                    null
+                    new MembersInquiryListResponse(List.of(new MembersInquiryResponse(
+                            protector.getId(),
+                            protector.getMemberName(),
+                            (short) protector.getAge(),
+                            protector.getGender(),
+                            protector.getRole(),
+                            protector.getExtentOfDementia(),
+                            protector.getProfilePictureURI(),
+                            null
+                    )))
             );
         }
+        return new MembersInquiryResponse(
+                member.getId(),
+                member.getMemberName(),
+                (short) member.getAge(),
+                member.getGender(),
+                member.getRole(),
+                member.getExtentOfDementia(),
+                member.getProfilePictureURI(),
+                null
+        );
     }
 }

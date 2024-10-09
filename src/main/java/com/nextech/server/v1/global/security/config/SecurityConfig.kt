@@ -1,5 +1,6 @@
 package com.nextech.server.v1.global.security.config
 
+import com.nextech.server.v1.global.security.auth.exception.CustomAccessDeniedHandler
 import com.nextech.server.v1.global.security.filter.JwtFilter
 import com.nextech.server.v1.global.security.jwt.service.JwtAuthenticationService
 import com.nextech.server.v1.global.security.jwt.service.JwtTokenService
@@ -28,16 +29,43 @@ open class SecurityConfig(
     }
 
     @Bean
-    open fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    open fun securityFilterChain(http: HttpSecurity, accessDeniedHandler: CustomAccessDeniedHandler): SecurityFilterChain {
         http.csrf { it.disable() }.cors { it.configurationSource(corsConfigurationSource()) }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { requests ->
                 requests.requestMatchers(
                     "/auth/signin",
-                    "auth/signup",
-                    "auth/reissue").permitAll().anyRequest()
-                    .authenticated()
-            }.addFilterBefore(JwtFilter(jwtTokenService,jwtAuthenticationService), UsernamePasswordAuthenticationFilter::class.java)
+                    "/auth/signup",
+                    "/auth/reissue"
+                ).permitAll()
+                    .requestMatchers(
+                        "/members/all").hasAnyRole(
+                            "ADMIN",
+                            "DEVELOPER"
+                        )
+                    .requestMatchers(
+                        "/members/ward").hasAnyRole(
+                            "ADMIN",
+                            "DEVELOPER",
+                            "PROTECTOR"
+                        )
+                    .requestMatchers(
+                        "/members/protector").hasAnyRole(
+                            "ADMIN",
+                            "DEVELOPER",
+                            "WARD_0",
+                            "WARD_1",
+                            "WARD_2",
+                            "WARD_3"
+                        )
+                    .anyRequest().authenticated()
+            }.exceptionHandling{
+                it.accessDeniedHandler(accessDeniedHandler)
+            }
+            .addFilterBefore(
+                JwtFilter(jwtTokenService,jwtAuthenticationService),
+                UsernamePasswordAuthenticationFilter::class.java
+            )
         return http.build()
     }
 

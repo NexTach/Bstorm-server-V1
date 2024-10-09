@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleEmailAlreadyExistsException(EmailAlreadyExistsException ex) {
+    @ExceptionHandler(PhoneNumberAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleEmailAlreadyExistsException(PhoneNumberAlreadyExistsException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
@@ -72,9 +72,63 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(FileUploadException.class)
-    public ResponseEntity<ErrorResponse> handleFileUploadException(FileUploadException ex) {
+    @ExceptionHandler(FileUploadFailedException.class)
+    public ResponseEntity<ErrorResponse> handleFileUploadException(FileUploadFailedException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to upload file");
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(RelationNullException.class)
+    public ResponseEntity<ErrorResponse> handleRelationNullException(RelationNullException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "Relation is null");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IncorrectPasswordException.class)
+    public ResponseEntity<ErrorResponse> handleIncorrectPasswordException(IncorrectPasswordException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Incorrect password");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DuplicateRoleAssignmentException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateRoleAssignmentException(DuplicateRoleAssignmentException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Duplicate role assignment");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidFileExtensionException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidFileExtensionException(InvalidFileExtensionException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Invalid file extension");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MissingFileNameException.class)
+    public ResponseEntity<ErrorResponse> handleMissingFileNameException(MissingFileNameException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Missing file name");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FileDeletionFailedException.class)
+    public ResponseEntity<ErrorResponse> handleFileDeletionFailedException(FileDeletionFailedException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete previous profile picture");
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(MaxFileSizeExceededException.class)
+    public ResponseEntity<ErrorResponse> handleMaxFileSizeExceededException(MaxFileSizeExceededException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "File size exceeds the maximum allowed size of 10MB");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DuplicateProfilePictureException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateProfilePictureException(DuplicateProfilePictureException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT, "Duplicate profile picture");
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ProfilePictureNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleProfilePictureNotFoundException(ProfilePictureNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "Profile picture not found");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }

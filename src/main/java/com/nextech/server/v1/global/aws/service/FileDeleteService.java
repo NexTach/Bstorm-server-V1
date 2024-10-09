@@ -14,12 +14,16 @@ import java.nio.charset.StandardCharsets;
 public class FileDeleteService {
 
     private final AmazonS3 s3Client;
-    @Value("${aws.s3.bucket}")
+    @Value("${AWS_S3_BUCKET}")
     private String bucket;
 
     public void deleteFile(String fileUrl) throws UnsupportedEncodingException {
         String decodedUrl = URLDecoder.decode(fileUrl, StandardCharsets.UTF_8);
         String fileName = decodedUrl.substring(decodedUrl.lastIndexOf("/") + 1);
+        s3Client.deleteObject(bucket, fileName);
+    }
+
+    public void deleteFile(String fileName, String bucket) throws UnsupportedEncodingException {
         s3Client.deleteObject(bucket, fileName);
     }
 }

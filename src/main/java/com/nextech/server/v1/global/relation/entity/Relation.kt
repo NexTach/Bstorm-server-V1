@@ -11,7 +11,7 @@ data class Relation(
     @Column(name = "relation_id", nullable = false)
     val id: Long,
 
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "from_protected", referencedColumnName = "phone_number", nullable = false)
     val fromProtected: Members,
 
