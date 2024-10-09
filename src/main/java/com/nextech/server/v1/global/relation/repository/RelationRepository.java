@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface RelationRepository extends JpaRepository<Relation, Long> {
     List<Relation> findByFromProtected(Members username);
+    List<Relation> findByToWardContains(String phoneNumber);
 }
