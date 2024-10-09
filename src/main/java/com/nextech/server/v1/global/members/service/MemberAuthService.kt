@@ -14,14 +14,13 @@ class MemberAuthService(
     private val jwtAuthenticationService: JwtAuthenticationService,
     private val memberRepository: MemberRepository
 ) {
-
-    fun getMemberByToken(request: HttpServletRequest): Members? {
+    fun getMemberByToken(request: HttpServletRequest): Members {
         val token: String = jwtTokenService.resolveToken(request.getHeader("Authorization"))
         val userInfo = jwtAuthenticationService.getAuthentication(token)
-        val member=memberRepository.findByPhoneNumber(userInfo.name)
+        val member = memberRepository.findByPhoneNumber(userInfo.name)
         member?.let {
             return it
         }
-        throw UsernameNotFoundException("User not found");
+        throw UsernameNotFoundException("User not found")
     }
 }
