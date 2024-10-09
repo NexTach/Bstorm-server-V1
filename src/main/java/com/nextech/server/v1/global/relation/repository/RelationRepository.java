@@ -11,4 +11,6 @@ import java.util.List;
 public interface RelationRepository extends JpaRepository<Relation, Long> {
     List<Relation> findByFromProtected(Members username);
     List<Relation> findByToWardContains(String phoneNumber);
+    void deleteByFromProtected(Members fromProtected);
+    void deleteByToWardContains(String phoneNumber);
 }
