@@ -18,10 +18,10 @@ jobs:
         uses: cloudtype-github-actions/deploy@v1
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          project: snowykte0426-daram
+          project: snowykte0426/daram
           stage: main
           yaml: >
-            name: brainstorming-server-v1
+            name: bstorm-server-v1
             app: dockerfile
             options:
               ports: 8080
