@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 data class TokenResponse(
     val accessToken: String,
     val refreshToken: String,
-    val accessTokenExpiresI: LocalDateTime,
+    val accessTokenExpiresIn: LocalDateTime,
     val refreshTokenExpiresIn: LocalDateTime,
     val roles: Roles
 )
