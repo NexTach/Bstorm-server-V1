@@ -1,12 +1,10 @@
-package com.nextech.server.v1.global.dto.response
+package com.nextech.server.v1.domain.auth.dto.response
 
 import com.nextech.server.v1.global.enums.Roles
 import java.time.LocalDateTime
 
-data class TokenResponse(
+data class ReissueResponse(
     val accessToken: String,
-    val refreshToken: String,
     val accessTokenExpiresIn: LocalDateTime,
-    val refreshTokenExpiresIn: LocalDateTime,
     val roles: Roles
 )
