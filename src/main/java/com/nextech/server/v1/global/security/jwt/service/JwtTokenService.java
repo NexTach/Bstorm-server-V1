@@ -138,19 +138,11 @@ public class JwtTokenService {
             throw new InvalidTokenException("User not found");
         }
         String newAccessToken = generateAccessToken(member.getPhoneNumber(), member.getRole());
-        String newRefreshToken = generateRefreshToken(member.getPhoneNumber());
-        refreshTokenRepository.delete(storedToken);
-        RefreshToken newRefreshTokenEntity = new RefreshToken(
-                newRefreshToken,
-                member.getPhoneNumber(),
-                LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME)
-        );
-        refreshTokenRepository.save(newRefreshTokenEntity);
         return new TokenResponse(
                 newAccessToken,
-                newRefreshToken,
+                refreshToken,
                 LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME),
-                LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME),
+                storedToken.getExpiredAt(),
                 member.getRole()
         );
     }
