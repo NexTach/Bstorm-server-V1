@@ -3,7 +3,7 @@ package com.nextech.server.v1.domain.members.service.impl;
 import com.nextech.server.v1.domain.members.entity.Members;
 import com.nextech.server.v1.domain.members.service.AllMembersInquiryService;
 import com.nextech.server.v1.domain.members.dto.response.MembersInquiryResponse;
-import com.nextech.server.v1.domain.members.repository.MemberRepository;
+import com.nextech.server.v1.global.members.repository.MemberRepository;
 import com.nextech.server.v1.global.members.dto.response.MembersInquiryListResponse;
 import com.nextech.server.v1.global.relation.entity.Relation;
 import com.nextech.server.v1.global.relation.repository.RelationRepository;

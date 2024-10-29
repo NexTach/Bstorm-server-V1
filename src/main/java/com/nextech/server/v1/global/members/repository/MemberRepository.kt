@@ -1,4 +1,4 @@
-package com.nextech.server.v1.domain.members.repository
+package com.nextech.server.v1.global.members.repository
 
 import com.nextech.server.v1.domain.members.entity.Members
 import org.springframework.data.jpa.repository.JpaRepository

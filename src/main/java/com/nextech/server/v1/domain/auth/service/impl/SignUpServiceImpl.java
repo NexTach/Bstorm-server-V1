@@ -5,7 +5,7 @@ import com.nextech.server.v1.domain.auth.dto.response.SignUpResponse;
 import com.nextech.server.v1.domain.auth.service.SignUpService;
 import com.nextech.server.v1.domain.members.dto.response.MembersInquiryResponse;
 import com.nextech.server.v1.domain.members.entity.Members;
-import com.nextech.server.v1.domain.members.repository.MemberRepository;
+import com.nextech.server.v1.global.members.repository.MemberRepository;
 import com.nextech.server.v1.global.enums.Roles;
 import com.nextech.server.v1.global.enums.SignUpRequestRoles;
 import com.nextech.server.v1.global.exception.PhoneNumberAlreadyExistsException;
