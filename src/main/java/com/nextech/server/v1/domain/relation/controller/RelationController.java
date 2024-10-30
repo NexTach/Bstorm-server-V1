@@ -28,7 +28,7 @@ public class RelationController {
 
     @Operation(summary = "PostRelation", description = "관계추가")
     @PostMapping
-    public Relation postRelation(HttpServletRequest request, @RequestBody PostRelationRequest postRelationRequest) {
+    public Relation postRelation(@RequestBody PostRelationRequest postRelationRequest) {
         return postRelationService.postRelation(postRelationRequest);
     }
 }
