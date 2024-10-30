@@ -18,5 +18,5 @@ data class Relation(
     @ElementCollection
     @CollectionTable(name = "relation_to_ward", joinColumns = [JoinColumn(name = "relation_id")])
     @Column(name = "to_ward", nullable = false)
-    var toWard: List<String>
+    var toWard: MutableList<String> = mutableListOf()
 )
