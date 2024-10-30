@@ -9,14 +9,14 @@ import java.util.*
 data class Relation(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "relation_id", nullable = false)
-    val id: Long,
+    val id: Long?,
 
     @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "from_protected", referencedColumnName = "phone_number", nullable = false)
-    val fromProtected: Members,
+    var fromProtected: Members,
 
     @ElementCollection
     @CollectionTable(name = "relation_to_ward", joinColumns = [JoinColumn(name = "relation_id")])
     @Column(name = "to_ward", nullable = false)
-    val toWard: List<String>
+    var toWard: List<String>
 )
