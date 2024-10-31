@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,12 +40,14 @@ public class RelationController {
 
     @Operation(summary = "DeleteRelation", description = "관계삭제")
     @DeleteMapping
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteRelation(HttpServletRequest request, @RequestBody DeleteRelationRequest deleteRelationRequest) {
         deleteRelationService.deleteRelation(request, deleteRelationRequest);
     }
 
     @Operation(summary = "AllDeleteRelation", description = "관계전체삭제")
     @DeleteMapping("/all")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void allDeleteRelation(HttpServletRequest request) {
         allDeleteRelationService.deleteRelation(request);
     }
