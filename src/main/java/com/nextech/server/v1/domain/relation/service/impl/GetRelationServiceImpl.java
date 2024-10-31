@@ -11,6 +11,7 @@ import com.nextech.server.v1.global.members.service.MemberAuthService;
 import com.nextech.server.v1.global.relation.entity.Relation;
 import com.nextech.server.v1.global.relation.repository.RelationRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class GetRelationServiceImpl implements GetRelationService {
 
     private final MemberAuthService memberAuthService;

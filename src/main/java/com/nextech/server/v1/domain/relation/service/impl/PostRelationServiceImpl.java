@@ -10,6 +10,7 @@ import com.nextech.server.v1.global.members.repository.MemberRepository;
 import com.nextech.server.v1.global.phonenumber.ConvertPhoneNumber;
 import com.nextech.server.v1.global.relation.entity.Relation;
 import com.nextech.server.v1.global.relation.repository.RelationRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostRelationServiceImpl implements PostRelationService {
 
     private final RelationRepository relationRepository;

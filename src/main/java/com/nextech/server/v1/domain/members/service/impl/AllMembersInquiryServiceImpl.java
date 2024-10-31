@@ -7,6 +7,7 @@ import com.nextech.server.v1.global.members.repository.MemberRepository;
 import com.nextech.server.v1.global.members.dto.response.MembersInquiryListResponse;
 import com.nextech.server.v1.global.relation.entity.Relation;
 import com.nextech.server.v1.global.relation.repository.RelationRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AllMembersInquiryServiceImpl implements AllMembersInquiryService {
 
     private final MemberRepository memberRepository;

@@ -7,6 +7,7 @@ import com.nextech.server.v1.domain.members.service.ParticularMemberInquiryServi
 import com.nextech.server.v1.global.members.dto.response.MembersInquiryListResponse;
 import com.nextech.server.v1.global.relation.entity.Relation;
 import com.nextech.server.v1.global.relation.repository.RelationRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ParticularMemberInquiryServiceImpl implements ParticularMemberInquiryService {
 
     private final MemberRepository memberRepository;
