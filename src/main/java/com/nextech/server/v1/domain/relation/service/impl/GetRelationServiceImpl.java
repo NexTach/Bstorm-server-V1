@@ -1,6 +1,6 @@
 package com.nextech.server.v1.domain.relation.service.impl;
 
-import com.nextech.server.v1.domain.members.entity.Members;
+import com.nextech.server.v1.global.members.entity.Members;
 import com.nextech.server.v1.domain.relation.dto.response.RelationInqueryResponse;
 import com.nextech.server.v1.domain.relation.dto.response.RelationInquiryListResponse;
 import com.nextech.server.v1.domain.relation.service.GetRelationService;

@@ -1,6 +1,6 @@
 package com.nextech.server.v1.global.security.auth;
 
-import com.nextech.server.v1.domain.members.entity.Members;
+import com.nextech.server.v1.global.members.entity.Members;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

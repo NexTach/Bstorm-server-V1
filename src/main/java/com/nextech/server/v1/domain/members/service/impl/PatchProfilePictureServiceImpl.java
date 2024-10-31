@@ -1,7 +1,7 @@
 package com.nextech.server.v1.domain.members.service.impl;
 
 import com.nextech.server.v1.domain.members.dto.response.PatchProfilePictureResponse;
-import com.nextech.server.v1.domain.members.entity.Members;
+import com.nextech.server.v1.global.members.entity.Members;
 import com.nextech.server.v1.global.members.repository.MemberRepository;
 import com.nextech.server.v1.domain.members.service.PatchProfilePictureService;
 import com.nextech.server.v1.global.aws.service.FileDeleteService;

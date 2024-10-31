@@ -1,6 +1,6 @@
 package com.nextech.server.v1.global.members.service
 
-import com.nextech.server.v1.domain.members.entity.Members
+import com.nextech.server.v1.global.members.entity.Members
 import com.nextech.server.v1.global.members.repository.MemberRepository
 import com.nextech.server.v1.global.security.jwt.service.JwtAuthenticationService
 import com.nextech.server.v1.global.security.jwt.service.JwtTokenService

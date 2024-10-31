@@ -1,6 +1,6 @@
 package com.nextech.server.v1.domain.relation.service.impl;
 
-import com.nextech.server.v1.domain.members.entity.Members;
+import com.nextech.server.v1.global.members.entity.Members;
 import com.nextech.server.v1.domain.relation.dto.request.PostRelationRequest;
 import com.nextech.server.v1.domain.relation.service.PostRelationService;
 import com.nextech.server.v1.global.enums.Roles;

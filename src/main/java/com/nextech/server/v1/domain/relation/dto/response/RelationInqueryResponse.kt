@@ -1,6 +1,6 @@
 package com.nextech.server.v1.domain.relation.dto.response
 
-import com.nextech.server.v1.domain.members.entity.Members
+import com.nextech.server.v1.global.members.entity.Members
 
 data class RelationInqueryResponse(
     val relationId: Long?,

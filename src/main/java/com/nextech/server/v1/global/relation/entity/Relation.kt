@@ -1,6 +1,6 @@
 package com.nextech.server.v1.global.relation.entity
 
-import com.nextech.server.v1.domain.members.entity.Members
+import com.nextech.server.v1.global.members.entity.Members
 import jakarta.persistence.*
 import java.util.*
 
