@@ -81,7 +81,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RelationNullException.class)
     public ResponseEntity<ErrorResponse> handleRelationNullException(RelationNullException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "Relation is null");
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IncorrectPasswordException.class)
