@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RelationNullException.class)
     public ResponseEntity<ErrorResponse> handleRelationNullException(RelationNullException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "Relation is null");
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "You are not the protector in the relationship or the relationship you requested does not exist");
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
