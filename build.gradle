@@ -69,9 +69,6 @@ dependencies {
     // AWS
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.691'
 
-    // Swagger
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-
     // Validation
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 
