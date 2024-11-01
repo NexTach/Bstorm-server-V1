@@ -1,7 +1,7 @@
 package com.nextech.server.v1.global.security.jwt.service;
 
-import com.nextech.server.v1.domain.members.entity.Members;
-import com.nextech.server.v1.domain.members.repository.MemberRepository;
+import com.nextech.server.v1.global.members.entity.Members;
+import com.nextech.server.v1.global.members.repository.MemberRepository;
 import com.nextech.server.v1.global.dto.response.TokenResponse;
 import com.nextech.server.v1.global.enums.Roles;
 import com.nextech.server.v1.global.exception.ExpiredRefreshTokenException;

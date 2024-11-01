@@ -1,8 +1,8 @@
 package com.nextech.server.v1.domain.members.service.impl;
 
 import com.nextech.server.v1.domain.auth.service.PasswordValidationService;
-import com.nextech.server.v1.domain.members.entity.Members;
-import com.nextech.server.v1.domain.members.repository.MemberRepository;
+import com.nextech.server.v1.global.members.entity.Members;
+import com.nextech.server.v1.global.members.repository.MemberRepository;
 import com.nextech.server.v1.domain.members.service.PhoneNumberChangeService;
 import com.nextech.server.v1.global.exception.PhoneNumberAlreadyExistsException;
 import com.nextech.server.v1.global.members.service.MemberAuthService;
