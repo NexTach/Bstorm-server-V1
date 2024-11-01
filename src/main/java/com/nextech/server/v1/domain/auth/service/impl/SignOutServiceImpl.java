@@ -1,8 +1,8 @@
 package com.nextech.server.v1.domain.auth.service.impl;
 
 import com.nextech.server.v1.domain.auth.service.SignOutService;
-import com.nextech.server.v1.domain.members.entity.Members;
-import com.nextech.server.v1.domain.members.repository.MemberRepository;
+import com.nextech.server.v1.global.members.entity.Members;
+import com.nextech.server.v1.global.members.repository.MemberRepository;
 import com.nextech.server.v1.global.redis.RedisUtil;
 import com.nextech.server.v1.global.security.jwt.repository.RefreshTokenRepository;
 import com.nextech.server.v1.global.security.jwt.service.JwtTokenService;

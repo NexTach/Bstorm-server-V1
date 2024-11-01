@@ -1,8 +1,9 @@
 package com.nextech.server.v1.domain.members.service.impl;
 
-import com.nextech.server.v1.domain.members.entity.Members;
-import com.nextech.server.v1.domain.members.repository.MemberRepository;
+import com.nextech.server.v1.global.members.entity.Members;
 import com.nextech.server.v1.domain.members.service.ResignService;
+import com.nextech.server.v1.global.enums.Roles;
+import com.nextech.server.v1.global.members.repository.MemberRepository;
 import com.nextech.server.v1.global.members.service.MemberAuthService;
 import com.nextech.server.v1.global.relation.repository.RelationRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,18 @@ public class ResignServiceImpl implements ResignService {
     public void resign(HttpServletRequest request) {
         Members member = memberAuthService.getMemberByToken(request);
         memberRepository.delete(member);
-        relationRepository.deleteByToWardContains(member.getPhoneNumber());
+        if (member.getRole() == Roles.ROLE_PROTECTOR) {
+            relationRepository.deleteByFromProtected(member);
+        } else if (
+                member.getRole() == Roles.ROLE_WARD_0 ||
+                        member.getRole() == Roles.ROLE_WARD_1 ||
+                        member.getRole() == Roles.ROLE_WARD_2 ||
+                        member.getRole() == Roles.ROLE_WARD_3
+        ) {
+            relationRepository.deleteByToWardContains(member.getPhoneNumber());
+        } else {
+            relationRepository.deleteByFromProtected(member);
+            relationRepository.deleteByToWardContains(member.getPhoneNumber());
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.nextech.server.v1.domain.members.entity
+package com.nextech.server.v1.global.members.entity
 
 import com.nextech.server.v1.global.enums.Gender
 import com.nextech.server.v1.global.enums.GenderConverter

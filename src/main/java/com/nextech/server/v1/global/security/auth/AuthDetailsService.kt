@@ -1,6 +1,6 @@
 package com.nextech.server.v1.global.security.auth
 
-import com.nextech.server.v1.domain.members.repository.MemberRepository
+import com.nextech.server.v1.global.members.repository.MemberRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
