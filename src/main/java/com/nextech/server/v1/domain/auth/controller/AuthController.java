@@ -6,14 +6,9 @@ import com.nextech.server.v1.domain.auth.dto.response.ReissueResponse;
 import com.nextech.server.v1.domain.auth.dto.response.SignUpResponse;
 import com.nextech.server.v1.domain.auth.service.ReissueService;
 import com.nextech.server.v1.domain.auth.service.SignInService;
-import com.nextech.server.v1.domain.auth.service.SignOutService;
 import com.nextech.server.v1.domain.auth.service.SignUpService;
 import com.nextech.server.v1.global.dto.response.TokenResponse;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.HttpStatus;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -23,7 +18,6 @@ public class AuthController {
 
     private final SignUpService signUpService;
     private final SignInService signInService;
-    private final SignOutService signOutService;
     private final ReissueService reissueService;
 
     @PostMapping("/signup")
@@ -39,11 +33,5 @@ public class AuthController {
     @PatchMapping("/reissue")
     public ReissueResponse reissue(@RequestHeader("refreshToken") String refreshToken) {
         return reissueService.reissue(refreshToken);
-    }
-
-    @DeleteMapping("/signout")
-    public HttpEntity<Object> signOut(HttpServletRequest request) {
-        signOutService.signOut(request.getHeader("Authorization"));
-        return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build();
     }
 }
