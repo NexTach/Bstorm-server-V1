@@ -6,6 +6,7 @@ plugins {
     id "org.jetbrains.kotlin.plugin.jpa" version "1.8.0"
     id "org.jetbrains.kotlin.plugin.noarg" version "1.8.0"
     id "org.jetbrains.kotlin.plugin.spring" version "1.8.0"
+    id "org.jetbrains.kotlin.plugin.serialization" version "1.8.0"
 }
 
 group = 'com.nextech'
@@ -68,6 +69,9 @@ dependencies {
 
     // AWS
     implementation 'com.amazonaws:aws-java-sdk-s3:1.12.691'
+
+    // Serialization
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0' // kotlinx.serialization 의존성 추가
 
     // Validation
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'

@@ -39,7 +39,10 @@ open class SecurityConfig(
                     "/auth/reissue"
                 ).permitAll()
                     .requestMatchers(
-                        "/members/all").hasAnyRole(
+                        "/members/all",
+                        "/admin/**",
+                        "/log"
+                    ).hasAnyRole(
                             "ADMIN",
                             "DEVELOPER"
                         )
