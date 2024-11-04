@@ -18,6 +18,10 @@ class RedisUtil(
         return redisTemplate.opsForValue().get(key)
     }
 
+    fun delete(key: String): Boolean {
+        return redisTemplate.delete(key)
+    }
+
     fun setBlackList(key: String, value: Any, milliSeconds: Long) {
         redisBlackListTemplate.opsForValue().set(key, value, milliSeconds, TimeUnit.MILLISECONDS)
     }

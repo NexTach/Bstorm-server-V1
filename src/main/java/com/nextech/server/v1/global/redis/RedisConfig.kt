@@ -10,18 +10,18 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer
 
 @Configuration
-open class RedisConfig(
+class RedisConfig(
     @Value("\${spring.data.redis.host}") private val redisHost: String,
     @Value("\${spring.data.redis.port}") private val redisPort: Int
 ) {
 
     @Bean
-    open fun redisConnectionFactory(): RedisConnectionFactory {
+    fun redisConnectionFactory(): RedisConnectionFactory {
         return LettuceConnectionFactory(redisHost, redisPort)
     }
 
     @Bean
-    open fun redisTemplate(): RedisTemplate<String, Any> {
+    fun redisTemplate(): RedisTemplate<String, Any> {
         val redisTemplate = RedisTemplate<String, Any>()
         redisTemplate.connectionFactory = redisConnectionFactory()
         val serializer = GenericJackson2JsonRedisSerializer()
