@@ -155,4 +155,10 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete refresh token");
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(LogNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleLogNotFoundException() {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "Log not found");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 }
