@@ -40,7 +40,8 @@ open class SecurityConfig(
                 ).permitAll()
                     .requestMatchers(
                         "/members/all",
-                        "/admin/**"
+                        "/admin/**",
+                        "/log"
                     ).hasAnyRole(
                             "ADMIN",
                             "DEVELOPER"
