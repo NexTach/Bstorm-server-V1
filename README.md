@@ -1,6 +1,6 @@
 # Bstorm-server-V1
 
-<img src="" width="200" height="200">
+<img src="https://github.com/NexTach/Bstorm-server-V1/blob/main/image/Bstrom-logo.png?raw=true" width="200" height="200">
 
 2024 빛가람 에너지밸리 소프트웨어 경진대회 NexTech의 치매예방 서비스 **Bstorm**입니다!
 
