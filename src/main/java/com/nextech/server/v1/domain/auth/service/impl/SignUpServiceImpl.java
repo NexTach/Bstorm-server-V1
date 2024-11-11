@@ -85,7 +85,6 @@ public class SignUpServiceImpl implements SignUpService {
         if (relations.isEmpty()) {
             return new MembersInquiryListResponse(List.of());
         }
-
         if (member.getRole() == Roles.ROLE_PROTECTOR) {
             List<MembersInquiryResponse> wardMembers = relations.stream()
                     .flatMap(relation -> relation.getToWard().stream().map(this::buildMemberResponseByPhoneNumber))

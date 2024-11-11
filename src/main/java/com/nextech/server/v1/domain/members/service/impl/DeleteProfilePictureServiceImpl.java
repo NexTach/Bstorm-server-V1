@@ -31,7 +31,7 @@ public class DeleteProfilePictureServiceImpl implements DeleteProfilePictureServ
             throw new ProfilePictureNotFoundException("Profile picture not found");
         }
         try {
-            fileDeleteService.deleteFile(member.getProfilePictureName(), BUCKET_NAME);
+            fileDeleteService.deleteFile(member.getProfilePictureName(), BUCKET_NAME).join();
         } catch (Exception e) {
             throw new FileDeletionFailedException("Failed to delete profile picture");
         }
