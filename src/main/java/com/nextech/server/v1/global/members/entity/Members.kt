@@ -45,10 +45,10 @@ data class Members(
     @Column(name = "profile_picture_name", nullable = true, length = 2048) var profilePictureName: String? = null,
 
     @OneToMany(mappedBy = "from", cascade = [CascadeType.REMOVE], orphanRemoval = true)
-    var mission: MutableList<Mission> = mutableListOf(),
+    var missions: MutableList<Mission> = mutableListOf(),
 ) {
     fun addMission(mission: Mission) {
-        this.mission.add(mission)
+        this.missions.add(mission)
     }
-    fun getMission(): List<Mission> = this.mission
+    fun getMission(): List<Mission> = this.missions
 }
