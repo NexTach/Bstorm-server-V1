@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -62,7 +63,8 @@ public class SignUpServiceImpl implements SignUpService {
                 role,
                 request.getExtentOfDementia(),
                 null,
-                null
+                null,
+                new ArrayList<>()
         );
     }
 
