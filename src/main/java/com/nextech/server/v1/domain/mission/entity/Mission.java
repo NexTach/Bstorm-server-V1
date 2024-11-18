@@ -17,7 +17,6 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Mission {
 
     @Id
