@@ -64,7 +64,7 @@ public class SignUpServiceImpl implements SignUpService {
                 request.getExtentOfDementia(),
                 null,
                 null,
-                new ArrayList<>()
+                new ArrayList<>()// 빈 리스트로 missions 필드 초기화
         );
     }
 
