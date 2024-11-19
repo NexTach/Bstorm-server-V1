@@ -1,6 +1,6 @@
 package com.nextech.server.v1.domain.mission.dto.response;
 
-import com.nextech.server.v1.domain.mission.dto.mission.MissionDto;
+import com.nextech.server.v1.domain.mission.entity.Mission;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class MissionResponseDto {
 
-    private List<MissionDto> body;
+    private List<Mission> body;
 }
