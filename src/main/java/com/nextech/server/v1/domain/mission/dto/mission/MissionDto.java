@@ -15,7 +15,7 @@ public class MissionDto {
 
     private int id;
     private String from;
-    private List<Status> status;
+    private List<Status> Status;
     private String toWard;
     private LocalDateTime startDate;
     private LocalDateTime expirationDate;
