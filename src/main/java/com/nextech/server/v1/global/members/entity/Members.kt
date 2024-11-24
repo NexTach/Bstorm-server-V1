@@ -51,4 +51,8 @@ data class Members(
         this.missions.add(mission)
     }
     fun getMission(): List<Mission> = this.missions
+
+    fun getName(): String {
+        return this.memberName
+    }
 }
