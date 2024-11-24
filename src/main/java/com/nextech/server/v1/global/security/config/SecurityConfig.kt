@@ -61,6 +61,10 @@ open class SecurityConfig(
                             "WARD_2",
                             "WARD_3"
                         )
+                    .requestMatchers("/missions/list")
+                    .hasAnyRole("ADMIN", "DEVELOPER")
+                    .requestMatchers("/missions/custom")
+                    .hasAnyRole("ADMIN", "PROTECTOR", "DEVELOPER")
                     .anyRequest().authenticated()
             }.exceptionHandling{
                 it.accessDeniedHandler(accessDeniedHandler)
