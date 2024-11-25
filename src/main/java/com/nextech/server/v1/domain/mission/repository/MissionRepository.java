@@ -12,4 +12,5 @@ import java.util.List;
 public interface MissionRepository extends JpaRepository<Mission, Long> {
     List<Mission> findByFromId(Members member);
     List<Mission> findByToWardAndStatus(Members toWard, Status status);
+    List<Mission> findByFromAndStatusContains(Members member, Status status);
 }
