@@ -5,6 +5,6 @@ import com.nextech.server.v1.global.members.entity.Members;
 
 import java.util.List;
 
-public interface SuccessfulMissionService {
+public interface SuccessfulMissionInquiryService {
     List<MissionResponseDto> getSuccessfulMissions(Members member);
 }
