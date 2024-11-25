@@ -8,7 +8,6 @@ import com.nextech.server.v1.domain.mission.service.ParticularMissionInquiryServ
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +27,6 @@ public class MissionController {
         return ResponseEntity.ok(missions);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PROTECTOR', 'ROLE_DEVELOPER')")
     @PostMapping("/custom")
     public ResponseEntity<MissionResponseDto> createMission(@RequestBody MissionRequestDto missionRequestDto) {
         MissionResponseDto createdMission = missionCreateService.createMission(missionRequestDto);
