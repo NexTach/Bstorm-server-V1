@@ -4,7 +4,7 @@ import com.nextech.server.v1.domain.mission.dto.enums.Status;
 import com.nextech.server.v1.domain.mission.dto.response.MissionResponseDto;
 import com.nextech.server.v1.domain.mission.entity.Mission;
 import com.nextech.server.v1.domain.mission.repository.MissionRepository;
-import com.nextech.server.v1.domain.mission.service.SuccessfulMissionService;
+import com.nextech.server.v1.domain.mission.service.SuccessfulMissionInquiryService;
 import com.nextech.server.v1.global.exception.LogNotFoundException;
 import com.nextech.server.v1.global.members.entity.Members;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SuccessfulMissionServiceImpl implements SuccessfulMissionService {
+public class SuccessfulMissionInquiryServiceImpl implements SuccessfulMissionInquiryService {
 
     private final MissionRepository missionRepository;
 
