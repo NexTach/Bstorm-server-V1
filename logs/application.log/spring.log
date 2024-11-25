@@ -1,50 +1,41 @@
-2024-11-24T15:00:28.647+09:00  INFO 42032 --- [restartedMain] c.n.server.v1.BstormServerV1Application  : Starting BstormServerV1Application using Java 17.0.13 with PID 42032 (C:\Bstorm-server-V1\build\classes\java\main started by user in C:\Bstorm-server-V1)
-2024-11-24T15:00:28.651+09:00 DEBUG 42032 --- [restartedMain] c.n.server.v1.BstormServerV1Application  : Running with Spring Boot v3.3.4, Spring v6.1.13
-2024-11-24T15:00:28.652+09:00  INFO 42032 --- [restartedMain] c.n.server.v1.BstormServerV1Application  : No active profile set, falling back to 1 default profile: "default"
-2024-11-24T15:00:28.729+09:00  INFO 42032 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2024-11-24T15:00:28.729+09:00  INFO 42032 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2024-11-24T15:00:29.818+09:00  INFO 42032 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-11-24T15:00:29.819+09:00  INFO 42032 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2024-11-24T15:00:30.004+09:00  INFO 42032 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 168 ms. Found 1 Redis repository interface.
-2024-11-24T15:00:30.446+09:00  INFO 42032 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2024-11-24T15:00:30.447+09:00  INFO 42032 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-11-24T15:00:30.495+09:00  INFO 42032 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.nextech.server.v1.global.security.jwt.repository.RefreshTokenRepository; If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: jakarta.persistence.Entity, jakarta.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository
-2024-11-24T15:00:30.523+09:00  INFO 42032 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 72 ms. Found 4 JPA repository interfaces.
-2024-11-24T15:00:31.298+09:00  INFO 42032 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2024-11-24T15:00:31.310+09:00  INFO 42032 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2024-11-24T15:00:31.310+09:00  INFO 42032 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
-2024-11-24T15:00:31.361+09:00  INFO 42032 --- [restartedMain] o.a.c.c.C.[.[localhost].[/api/v1]        : Initializing Spring embedded WebApplicationContext
-2024-11-24T15:00:31.361+09:00  INFO 42032 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2631 ms
-2024-11-24T15:00:31.492+09:00  INFO 42032 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-11-24T15:00:31.738+09:00  INFO 42032 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@4432b742
-2024-11-24T15:00:31.739+09:00  INFO 42032 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-11-24T15:00:31.751+09:00  INFO 42032 --- [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mariadb://svc.sel4.cloudtype.app:32489/Bstorm?user=root&password=***'
-2024-11-24T15:00:31.974+09:00  INFO 42032 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-11-24T15:00:32.044+09:00  INFO 42032 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-11-24T15:00:32.085+09:00  INFO 42032 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-11-24T15:00:32.398+09:00  INFO 42032 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-11-24T15:00:32.486+09:00  WARN 42032 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MariaDBDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-11-24T15:00:33.407+09:00  INFO 42032 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-11-24T15:00:33.736+09:00  INFO 42032 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-11-24T15:00:34.720+09:00  INFO 42032 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2024-11-24T15:00:35.497+09:00  WARN 42032 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-11-24T15:00:35.528+09:00  INFO 42032 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name authDetailsService
-2024-11-24T15:00:35.976+09:00  INFO 42032 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2024-11-24T15:00:36.189+09:00  WARN 42032 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
-2024-11-24T15:00:36.528+09:00  INFO 42032 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/api/v1'
-2024-11-24T15:00:36.541+09:00  INFO 42032 --- [restartedMain] c.n.server.v1.BstormServerV1Application  : Started BstormServerV1Application in 8.321 seconds (process running for 9.365)
-2024-11-24T15:00:37.150+09:00  INFO 42032 --- [RMI TCP Connection(3)-192.168.1.5] o.a.c.c.C.[.[localhost].[/api/v1]        : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2024-11-24T15:00:37.150+09:00  INFO 42032 --- [RMI TCP Connection(3)-192.168.1.5] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2024-11-24T15:00:37.151+09:00  INFO 42032 --- [RMI TCP Connection(3)-192.168.1.5] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2024-11-24T15:01:51.567+09:00  WARN 42032 --- [http-nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
-2024-11-24T15:03:16.639+09:00  WARN 42032 --- [http-nio-8080-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' is not supported]
-2024-11-24T15:03:34.733+09:00  WARN 42032 --- [http-nio-8080-exec-7] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.nextech.server.v1.global.exception.PhoneNumberAlreadyExistsException: User is already subscribed]
-2024-11-24T15:04:42.717+09:00  WARN 42032 --- [http-nio-8080-exec-4] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.nextech.server.v1.global.exception.LogNotFoundException: No missions found]
-2024-11-24T15:05:00.301+09:00  WARN 42032 --- [http-nio-8080-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.nextech.server.v1.global.exception.LogNotFoundException: No missions found]
-2024-11-24T15:05:03.039+09:00  WARN 42032 --- [http-nio-8080-exec-3] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.nextech.server.v1.global.exception.LogNotFoundException: No missions found]
-2024-11-24T15:05:04.335+09:00  WARN 42032 --- [http-nio-8080-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.nextech.server.v1.global.exception.LogNotFoundException: No missions found]
-2024-11-24T15:05:12.772+09:00  WARN 42032 --- [http-nio-8080-exec-10] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.nextech.server.v1.global.exception.LogNotFoundException: No missions found]
-2024-11-24T15:05:21.211+09:00  WARN 42032 --- [http-nio-8080-exec-7] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.nextech.server.v1.global.exception.LogNotFoundException: No missions found]
-2024-11-24T15:12:54.325+09:00  INFO 42032 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2024-11-24T15:12:54.329+09:00  INFO 42032 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2024-11-24T15:12:54.364+09:00  INFO 42032 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-11-25T20:36:18.569+09:00  INFO 40100 --- [restartedMain] c.n.server.v1.BstormServerV1Application  : Starting BstormServerV1Application using Java 17.0.13 with PID 40100 (C:\Bstorm-server-V1\build\classes\java\main started by user in C:\Bstorm-server-V1)
+2024-11-25T20:36:18.573+09:00 DEBUG 40100 --- [restartedMain] c.n.server.v1.BstormServerV1Application  : Running with Spring Boot v3.3.4, Spring v6.1.13
+2024-11-25T20:36:18.575+09:00  INFO 40100 --- [restartedMain] c.n.server.v1.BstormServerV1Application  : No active profile set, falling back to 1 default profile: "default"
+2024-11-25T20:36:18.644+09:00  INFO 40100 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-11-25T20:36:18.645+09:00  INFO 40100 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-11-25T20:36:21.020+09:00  INFO 40100 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-11-25T20:36:21.021+09:00  INFO 40100 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-11-25T20:36:21.183+09:00  INFO 40100 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 140 ms. Found 1 Redis repository interface.
+2024-11-25T20:36:21.708+09:00  INFO 40100 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-11-25T20:36:21.709+09:00  INFO 40100 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-11-25T20:36:21.758+09:00  INFO 40100 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.nextech.server.v1.global.security.jwt.repository.RefreshTokenRepository; If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: jakarta.persistence.Entity, jakarta.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository
+2024-11-25T20:36:21.786+09:00  INFO 40100 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 4 JPA repository interfaces.
+2024-11-25T20:36:22.662+09:00  INFO 40100 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-11-25T20:36:22.674+09:00  INFO 40100 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-11-25T20:36:22.674+09:00  INFO 40100 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.30]
+2024-11-25T20:36:22.726+09:00  INFO 40100 --- [restartedMain] o.a.c.c.C.[.[localhost].[/api/v1]        : Initializing Spring embedded WebApplicationContext
+2024-11-25T20:36:22.726+09:00  INFO 40100 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4081 ms
+2024-11-25T20:36:22.858+09:00  INFO 40100 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-11-25T20:36:23.080+09:00  INFO 40100 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@5f3de89b
+2024-11-25T20:36:23.082+09:00  INFO 40100 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-11-25T20:36:23.093+09:00  INFO 40100 --- [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:mariadb://svc.sel4.cloudtype.app:32489/Bstorm?user=root&password=***'
+2024-11-25T20:36:23.286+09:00  INFO 40100 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-11-25T20:36:23.359+09:00  INFO 40100 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-11-25T20:36:23.391+09:00  INFO 40100 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-11-25T20:36:23.691+09:00  INFO 40100 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-11-25T20:36:23.766+09:00  WARN 40100 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MariaDBDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-11-25T20:36:24.619+09:00  INFO 40100 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-11-25T20:36:24.925+09:00  INFO 40100 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-11-25T20:36:25.825+09:00  INFO 40100 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-11-25T20:36:26.468+09:00  WARN 40100 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-11-25T20:36:26.494+09:00  INFO 40100 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name authDetailsService
+2024-11-25T20:36:26.947+09:00  INFO 40100 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2024-11-25T20:36:27.181+09:00  WARN 40100 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2024-11-25T20:36:27.607+09:00  INFO 40100 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/api/v1'
+2024-11-25T20:36:27.629+09:00  INFO 40100 --- [restartedMain] c.n.server.v1.BstormServerV1Application  : Started BstormServerV1Application in 9.514 seconds (process running for 10.264)
+2024-11-25T20:36:28.140+09:00  INFO 40100 --- [RMI TCP Connection(2)-192.168.1.10] o.a.c.c.C.[.[localhost].[/api/v1]        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-11-25T20:36:28.141+09:00  INFO 40100 --- [RMI TCP Connection(2)-192.168.1.10] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-11-25T20:36:28.144+09:00  INFO 40100 --- [RMI TCP Connection(2)-192.168.1.10] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-11-25T20:36:38.130+09:00  INFO 40100 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-11-25T20:36:38.142+09:00  INFO 40100 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-11-25T20:36:38.174+09:00  INFO 40100 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
