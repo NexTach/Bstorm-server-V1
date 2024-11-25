@@ -6,5 +6,5 @@ import java.time.LocalDateTime
 data class ReissueResponse(
     val accessToken: String,
     val accessTokenExpiresIn: LocalDateTime,
-    val roles: Roles
+    val role: Roles
 )
