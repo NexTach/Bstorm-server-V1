@@ -5,6 +5,6 @@ import com.nextech.server.v1.global.members.entity.Members;
 
 import java.util.List;
 
-public interface ProgressMissionService {
+public interface ProgressMissionInquiryService {
     List<MissionResponseDto> getProgressMissions(Members member);
 }
