@@ -3,6 +3,7 @@ package com.nextech.server.v1.domain.mission.controller;
 import com.nextech.server.v1.domain.mission.dto.request.MissionRequestDto;
 import com.nextech.server.v1.domain.mission.dto.response.MissionResponseDto;
 import com.nextech.server.v1.domain.mission.service.*;
+import com.nextech.server.v1.domain.mission.service.impl.FailedMissionInquiryServiceImpl;
 import com.nextech.server.v1.global.exception.ExpiredTokenException;
 import com.nextech.server.v1.global.exception.InvalidTokenException;
 import com.nextech.server.v1.global.exception.InvalidTokenFormatException;
@@ -27,9 +28,10 @@ public class MissionController {
     private final ParticularMissionInquiryService particularMissionInquiryService;
     private final UserMissionInquiryService userMissionInquiryService;
     private final MemberAuthService memberAuthService;
-    private final SuccessfulMissionService successfulMissionService;
-    private final ProgressMissionService progressMissionService;
-    private final FailedMissionService failedMissionService;
+    private final SuccessfulMissionInquiryService successfulMissionService;
+    private final ProgressMissionInquiryService progressMissionService;
+    private final FailedMissionInquiryService failedMissionService;
+    private final FailedMissionInquiryServiceImpl failedMissionInquiryServiceImpl;
 
     @GetMapping("/list")
     public ResponseEntity<List<MissionResponseDto>> getAllMissions() {
