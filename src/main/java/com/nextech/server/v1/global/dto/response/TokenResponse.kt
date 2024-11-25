@@ -8,5 +8,5 @@ data class TokenResponse(
     val refreshToken: String,
     val accessTokenExpiresIn: LocalDateTime,
     val refreshTokenExpiresIn: LocalDateTime,
-    val roles: Roles
+    val role: Roles
 )
