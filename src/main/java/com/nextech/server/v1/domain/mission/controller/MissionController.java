@@ -28,6 +28,7 @@ public class MissionController {
     private final UserMissionInquiryService userMissionInquiryService;
     private final MemberAuthService memberAuthService;
     private final SuccessfulMissionService successfulMissionService;
+    private final ProgressMissionService progressMissionService;
 
     @GetMapping("/list")
     public ResponseEntity<List<MissionResponseDto>> getAllMissions() {
@@ -62,6 +63,23 @@ public class MissionController {
             List<MissionResponseDto> successfulMissions = successfulMissionService.getSuccessfulMissions(member);
 
             return ResponseEntity.ok(successfulMissions);
+
+        } catch (ExpiredTokenException | InvalidTokenException | InvalidTokenFormatException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        } catch (LogNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("/progress")
+    public ResponseEntity<List<MissionResponseDto>> getProgressMissions(HttpServletRequest request) {
+        try {
+            Members member = memberAuthService.getMemberByToken(request);
+
+            List<MissionResponseDto> progressMissions = progressMissionService.getProgressMissions(member);
+
+            return ResponseEntity.ok(progressMissions);
 
         } catch (ExpiredTokenException | InvalidTokenException | InvalidTokenFormatException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
