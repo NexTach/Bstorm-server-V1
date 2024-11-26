@@ -13,6 +13,6 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     List<Mission> findByFromId(Members member);
     List<Mission> findByToWardAndStatus(Members toWard, Status status);
     List<Mission> findByFromAndStatusContains(Members member, Status status);
-    List<Mission> findByFromAndToWard(String from, Members toWard);
-    List<Mission> findByFrom(Long memberId);
+    List<Mission> findByFromAndToWard(Members from, Members toWard);
+    List<Mission> findByFrom(Members from);
 }
