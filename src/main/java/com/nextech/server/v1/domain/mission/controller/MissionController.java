@@ -204,11 +204,8 @@ public class MissionController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PROTECTOR', 'ROLE_DEVELOPER')")
-    public ResponseEntity<Void> deleteMission(
-            @PathVariable Long id,
-            @RequestHeader("Authorization") String authorizationHeader) {
-
+    public ResponseEntity<Void> deleteMission(@PathVariable Long id) {
         missionDeleteService.deleteMission(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
