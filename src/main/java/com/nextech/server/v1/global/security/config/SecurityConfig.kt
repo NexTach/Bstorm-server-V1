@@ -65,6 +65,8 @@ open class SecurityConfig(
                     .hasAnyRole("ADMIN", "DEVELOPER")
                     .requestMatchers("/missions/custom")
                     .hasAnyRole("ADMIN", "PROTECTOR", "DEVELOPER")
+                    .requestMatchers("/missions")
+                    .hasAnyRole("ADMIN", "PROTECTOR", "DEVELOPER")
                     .anyRequest().authenticated()
             }.exceptionHandling{
                 it.accessDeniedHandler(accessDeniedHandler)
