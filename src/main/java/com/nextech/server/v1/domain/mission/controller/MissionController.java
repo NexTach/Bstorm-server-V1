@@ -4,6 +4,7 @@ import com.nextech.server.v1.domain.mission.dto.request.MissionRequestDto;
 import com.nextech.server.v1.domain.mission.dto.request.MissionStatusUpdateRequestDto;
 import com.nextech.server.v1.domain.mission.dto.request.MissionUpdateRequestDto;
 import com.nextech.server.v1.domain.mission.dto.response.MissionResponseDto;
+import com.nextech.server.v1.domain.mission.entity.MissionList;
 import com.nextech.server.v1.domain.mission.service.*;
 import com.nextech.server.v1.global.exception.ExpiredTokenException;
 import com.nextech.server.v1.global.exception.InvalidTokenException;
@@ -39,6 +40,7 @@ public class MissionController {
     private final MissionUpdateService missionUpdateService;
     private final MissionStatusUpdateService missionStatusUpdateService;
     private final MissionDeleteService missionDeleteService;
+    private final GetMissionListService getMissionListService;
 
     @GetMapping("/list")
     public ResponseEntity<List<MissionResponseDto>> getAllMissions() {
@@ -196,9 +198,11 @@ public class MissionController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PROTECTOR', 'ROLE_DEVELOPER')")
     public ResponseEntity<MissionResponseDto> updateMissionStatus(
             @PathVariable Long id,
-            @RequestBody MissionStatusUpdateRequestDto requestDto) {
+            @RequestBody MissionStatusUpdateRequestDto requestDto,
+            HttpServletRequest request
+    ) {
 
-        MissionResponseDto response = missionStatusUpdateService.updateMissionStatus(id, requestDto);
+        MissionResponseDto response = missionStatusUpdateService.updateMissionStatus(id, requestDto, request);
         return ResponseEntity.ok(response);
     }
 
@@ -207,5 +211,11 @@ public class MissionController {
     public ResponseEntity<Void> deleteMission(@PathVariable Long id) {
         missionDeleteService.deleteMission(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/missionlist")
+    public ResponseEntity<List<MissionList>> getMissionList(HttpServletRequest request) {
+        List<MissionList> missionList = getMissionListService.getMissionList(request);
+        return ResponseEntity.ok(missionList);
     }
 }
