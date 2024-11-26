@@ -20,7 +20,7 @@ public class CustomMissionInquiryServiceImpl implements CustomMissionInquiryServ
 
     @Override
     public List<MissionResponseDto> getCustomMissions(Members member) {
-        List<Mission> missions = missionRepository.findByFrom(member.getId());
+        List<Mission> missions = missionRepository.findByFrom(member);
 
         if (missions.isEmpty()) {
             throw new LogNotFoundException("No custom missions found.");
