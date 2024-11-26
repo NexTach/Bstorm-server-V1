@@ -4,12 +4,14 @@ import com.nextech.server.v1.domain.auth.dto.request.SignUpRequest;
 import com.nextech.server.v1.domain.auth.dto.response.SignUpResponse;
 import com.nextech.server.v1.domain.auth.service.SignUpService;
 import com.nextech.server.v1.domain.members.dto.response.MembersInquiryResponse;
-import com.nextech.server.v1.global.members.entity.Members;
-import com.nextech.server.v1.global.members.repository.MemberRepository;
+import com.nextech.server.v1.domain.mission.entity.MissionList;
+import com.nextech.server.v1.domain.mission.repository.MissionListRepository;
 import com.nextech.server.v1.global.enums.Roles;
 import com.nextech.server.v1.global.enums.SignUpRequestRoles;
 import com.nextech.server.v1.global.exception.PhoneNumberAlreadyExistsException;
 import com.nextech.server.v1.global.members.dto.response.MembersInquiryListResponse;
+import com.nextech.server.v1.global.members.entity.Members;
+import com.nextech.server.v1.global.members.repository.MemberRepository;
 import com.nextech.server.v1.global.phonenumber.ConvertPhoneNumber;
 import com.nextech.server.v1.global.relation.entity.Relation;
 import com.nextech.server.v1.global.relation.repository.RelationRepository;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +35,7 @@ public class SignUpServiceImpl implements SignUpService {
     private final RelationRepository relationRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final ConvertPhoneNumber convertPhoneNumber;
+    private final MissionListRepository missionListRepository;
 
     @Transactional
     @Override
@@ -42,6 +46,7 @@ public class SignUpServiceImpl implements SignUpService {
         Members newMember = createNewMember(signUpRequest, phoneNumber, role);
         Members savedMember = memberRepository.save(newMember);
         MembersInquiryListResponse membersInquiryListResponse = buildRelationListResponse(savedMember);
+        missionListRepository.save(new MissionList(null, savedMember, 0, LocalDate.now()));
         return buildSignUpResponse(savedMember, membersInquiryListResponse);
     }
 
@@ -64,7 +69,7 @@ public class SignUpServiceImpl implements SignUpService {
                 request.getExtentOfDementia(),
                 null,
                 null,
-                new ArrayList<>()// 빈 리스트로 missions 필드 초기화
+                new ArrayList<>() // 빈 리스트로 missions 필드 초기화
         );
     }
 
