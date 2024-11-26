@@ -38,6 +38,7 @@ public class MissionController {
     private final CustomMissionInquiryService customMissionService;
     private final MissionUpdateService missionUpdateService;
     private final MissionStatusUpdateService missionStatusUpdateService;
+    private final MissionDeleteService missionDeleteService;
 
     @GetMapping("/list")
     public ResponseEntity<List<MissionResponseDto>> getAllMissions() {
@@ -199,5 +200,15 @@ public class MissionController {
 
         MissionResponseDto response = missionStatusUpdateService.updateMissionStatus(id, requestDto);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PROTECTOR', 'ROLE_DEVELOPER')")
+    public ResponseEntity<Void> deleteMission(
+            @PathVariable Long id,
+            @RequestHeader("Authorization") String authorizationHeader) {
+
+        missionDeleteService.deleteMission(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // 204 No Content
     }
 }
