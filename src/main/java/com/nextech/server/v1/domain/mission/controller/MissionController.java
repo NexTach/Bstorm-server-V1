@@ -33,6 +33,7 @@ public class MissionController {
     private final FailedMissionInquiryService failedMissionService;
     private final ExpiredMissionInquiryService expiredMissionService;
     private final SystemMissionInquiryService systemMissionService;
+    private final CustomMissionInquiryService customMissionService;
 
     @GetMapping("/list")
     public ResponseEntity<List<MissionResponseDto>> getAllMissions() {
@@ -141,6 +142,27 @@ public class MissionController {
 
         } catch (LogNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("/custom")
+    public ResponseEntity<List<MissionResponseDto>> getCustomMissions(HttpServletRequest request) {
+        try {
+            Members member = memberAuthService.getMemberByToken(request);
+
+            List<MissionResponseDto> customMissions = customMissionService.getCustomMissions(member);
+
+            if (customMissions.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+            return ResponseEntity.ok(customMissions);
+
+        } catch (ExpiredTokenException | InvalidTokenException | InvalidTokenFormatException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }
