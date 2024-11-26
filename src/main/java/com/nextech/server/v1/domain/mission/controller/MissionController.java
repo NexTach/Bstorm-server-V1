@@ -1,6 +1,7 @@
 package com.nextech.server.v1.domain.mission.controller;
 
 import com.nextech.server.v1.domain.mission.dto.request.MissionRequestDto;
+import com.nextech.server.v1.domain.mission.dto.request.MissionUpdateRequestDto;
 import com.nextech.server.v1.domain.mission.dto.response.MissionResponseDto;
 import com.nextech.server.v1.domain.mission.service.*;
 import com.nextech.server.v1.domain.mission.service.impl.FailedMissionInquiryServiceImpl;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +36,7 @@ public class MissionController {
     private final ExpiredMissionInquiryService expiredMissionService;
     private final SystemMissionInquiryService systemMissionService;
     private final CustomMissionInquiryService customMissionService;
+    private final MissionUpdateService missionUpdateService;
 
     @GetMapping("/list")
     public ResponseEntity<List<MissionResponseDto>> getAllMissions() {
@@ -163,6 +166,27 @@ public class MissionController {
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PatchMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PROTECTOR', 'ROLE_DEVELOPER')")
+    public ResponseEntity<MissionResponseDto> updateMission(
+            @PathVariable Long id,
+            @RequestBody MissionUpdateRequestDto requestDto,
+            HttpServletRequest request) {
+        try {
+            Members member = memberAuthService.getMemberByToken(request);
+
+            MissionResponseDto updatedMission = missionUpdateService.updateMission(id, member, requestDto);
+
+            return ResponseEntity.ok(updatedMission);
+
+        } catch (ExpiredTokenException | InvalidTokenException | InvalidTokenFormatException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        } catch (LogNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 }
