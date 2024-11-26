@@ -1,6 +1,7 @@
 package com.nextech.server.v1.domain.mission.controller;
 
 import com.nextech.server.v1.domain.mission.dto.request.MissionRequestDto;
+import com.nextech.server.v1.domain.mission.dto.request.MissionStatusUpdateRequestDto;
 import com.nextech.server.v1.domain.mission.dto.request.MissionUpdateRequestDto;
 import com.nextech.server.v1.domain.mission.dto.response.MissionResponseDto;
 import com.nextech.server.v1.domain.mission.service.*;
@@ -36,6 +37,7 @@ public class MissionController {
     private final SystemMissionInquiryService systemMissionService;
     private final CustomMissionInquiryService customMissionService;
     private final MissionUpdateService missionUpdateService;
+    private final MissionStatusUpdateService missionStatusUpdateService;
 
     @GetMapping("/list")
     public ResponseEntity<List<MissionResponseDto>> getAllMissions() {
@@ -187,5 +189,15 @@ public class MissionController {
         } catch (LogNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PROTECTOR', 'ROLE_DEVELOPER')")
+    public ResponseEntity<MissionResponseDto> updateMissionStatus(
+            @PathVariable Long id,
+            @RequestBody MissionStatusUpdateRequestDto requestDto) {
+
+        MissionResponseDto response = missionStatusUpdateService.updateMissionStatus(id, requestDto);
+        return ResponseEntity.ok(response);
     }
 }
