@@ -4,7 +4,6 @@ import com.nextech.server.v1.domain.mission.dto.request.MissionRequestDto;
 import com.nextech.server.v1.domain.mission.dto.request.MissionUpdateRequestDto;
 import com.nextech.server.v1.domain.mission.dto.response.MissionResponseDto;
 import com.nextech.server.v1.domain.mission.service.*;
-import com.nextech.server.v1.domain.mission.service.impl.FailedMissionInquiryServiceImpl;
 import com.nextech.server.v1.global.exception.ExpiredTokenException;
 import com.nextech.server.v1.global.exception.InvalidTokenException;
 import com.nextech.server.v1.global.exception.InvalidTokenFormatException;
