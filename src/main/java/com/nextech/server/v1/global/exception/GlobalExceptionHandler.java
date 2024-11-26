@@ -161,4 +161,10 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "Log not found");
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(MissionListNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMissionListNotFoundException() {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "Mission list not found");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 }
