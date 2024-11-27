@@ -21,7 +21,7 @@ public class ReissueServiceImpl implements ReissueService {
         return new ReissueResponse(
                 intactTokenResponse.getAccessToken(),
                 intactTokenResponse.getAccessTokenExpiresIn(),
-                intactTokenResponse.getRoles()
+                intactTokenResponse.getRole()
         );
     }
 }

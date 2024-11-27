@@ -86,8 +86,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IncorrectPasswordException.class)
     public ResponseEntity<ErrorResponse> handleIncorrectPasswordException() {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Incorrect password");
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED, "Incorrect password");
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(DuplicateRoleAssignmentException.class)
@@ -159,6 +159,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(LogNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleLogNotFoundException() {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "Log not found");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MissionListNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMissionListNotFoundException() {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "Mission list not found");
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }
