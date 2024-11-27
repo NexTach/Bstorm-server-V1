@@ -10,6 +10,8 @@ import com.nextech.server.v1.global.members.entity.Members;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,10 +20,10 @@ import java.util.stream.Collectors;
 public class SuccessfulMissionInquiryServiceImpl implements SuccessfulMissionInquiryService {
 
     private final MissionRepository missionRepository;
-
+    List<Status> statuses = new ArrayList<>(Collections.singleton(Status.STATUS_SUCCESSFUL));
     @Override
     public List<MissionResponseDto> getSuccessfulMissions(Members member) {
-        List<Mission> missions = missionRepository.findByToWardAndStatus(member, Status.STATUS_SUCCESSFUL);
+        List<Mission> missions = missionRepository.findByToWardIdAndStatusIn(member.getId(), statuses);
 
         if (missions.isEmpty()) {
             throw new LogNotFoundException("No successful missions found");

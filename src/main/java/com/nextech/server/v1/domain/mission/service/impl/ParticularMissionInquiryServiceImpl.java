@@ -20,7 +20,6 @@ public class ParticularMissionInquiryServiceImpl implements ParticularMissionInq
     public MissionResponseDto getMissionById(Long id) {
         Mission mission = missionRepository.findById(id)
                 .orElseThrow(() -> new LogNotFoundException("Mission not found with id: " + id));
-
         return MissionResponseDto.from(mission);
     }
 }

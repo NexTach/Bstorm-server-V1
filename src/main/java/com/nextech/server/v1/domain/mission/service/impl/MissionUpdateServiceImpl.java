@@ -1,6 +1,5 @@
 package com.nextech.server.v1.domain.mission.service.impl;
 
-import com.nextech.server.v1.domain.members.repository.MembersRepository;
 import com.nextech.server.v1.domain.mission.dto.request.MissionUpdateRequestDto;
 import com.nextech.server.v1.domain.mission.dto.response.MissionResponseDto;
 import com.nextech.server.v1.domain.mission.entity.Mission;
@@ -8,6 +7,7 @@ import com.nextech.server.v1.domain.mission.repository.MissionRepository;
 import com.nextech.server.v1.domain.mission.service.MissionUpdateService;
 import com.nextech.server.v1.global.exception.LogNotFoundException;
 import com.nextech.server.v1.global.members.entity.Members;
+import com.nextech.server.v1.global.members.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class MissionUpdateServiceImpl implements MissionUpdateService {
 
     private final MissionRepository missionRepository;
-    private final MembersRepository membersRepository;
+    private final MemberRepository membersRepository;
 
     @Override
     public MissionResponseDto updateMission(Long id, Members member, MissionUpdateRequestDto requestDto) {

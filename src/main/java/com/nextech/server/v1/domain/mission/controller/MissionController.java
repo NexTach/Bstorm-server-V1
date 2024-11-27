@@ -1,5 +1,6 @@
 package com.nextech.server.v1.domain.mission.controller;
 
+import com.nextech.server.v1.domain.mission.dto.request.MissionCreateRequestDto;
 import com.nextech.server.v1.domain.mission.dto.request.MissionRequestDto;
 import com.nextech.server.v1.domain.mission.dto.request.MissionStatusUpdateRequestDto;
 import com.nextech.server.v1.domain.mission.dto.request.MissionUpdateRequestDto;
@@ -49,8 +50,8 @@ public class MissionController {
     }
 
     @PostMapping("/custom")
-    public ResponseEntity<MissionResponseDto> createMission(@RequestBody MissionRequestDto missionRequestDto) {
-        MissionResponseDto createdMission = missionCreateService.createMission(missionRequestDto);
+    public ResponseEntity<MissionResponseDto> createMission(@RequestBody MissionCreateRequestDto missionRequestDto, HttpServletRequest request) {
+        MissionResponseDto createdMission = missionCreateService.createMission(missionRequestDto, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdMission);
     }
 

@@ -22,7 +22,7 @@ public class UserMissionInquiryServiceImpl implements UserMissionInquiryService 
 
     @Override
     public List<MissionResponseDto> getUserMissions(Members member) {
-        List<Mission> missions = missionRepository.findByFromId(member);
+        List<Mission> missions = missionRepository.findByFromId(member.getId());
         if (missions.isEmpty()) {
             throw new LogNotFoundException("No missions found for user with id: " + member);
         }
