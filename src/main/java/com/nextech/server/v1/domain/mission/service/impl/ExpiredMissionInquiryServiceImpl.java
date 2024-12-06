@@ -10,6 +10,8 @@ import com.nextech.server.v1.global.members.entity.Members;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +23,8 @@ public class ExpiredMissionInquiryServiceImpl implements ExpiredMissionInquirySe
 
     @Override
     public List<MissionResponseDto> getExpiredMissions(Members member) {
-        List<Mission> missions = missionRepository.findByToWardAndStatus(member, Status.STATUS_EXPIRED);
+        List<Status> statuses = new ArrayList<>(Collections.singleton(Status.STATUS_EXPIRED));
+        List<Mission> missions = missionRepository.findByToWardIdAndStatusIn(member.getId(), statuses);
 
         if (missions.isEmpty()) {
             throw new LogNotFoundException("No expired missions found.");
